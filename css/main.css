@@ -745,10 +745,10 @@ h3 {
   font-size: 1.1em;
 }
 p {
-  font-size: 1em;
+  font-size: 0.8em;
 }
 ul {
-  font-size: 1em;
+  font-size: 0.8em;
 }
 .post-body .note {
   border-radius: 3px;
@@ -1217,7 +1217,7 @@ ul {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ffa8ff;
+  background: #08f487;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1367,7 +1367,7 @@ ul {
   white-space: nowrap;
 }
 .post-toc .nav .nav-child {
-  display: none;
+  display: block;
 }
 .post-toc .nav .active > .nav-child {
   display: block;
@@ -1722,7 +1722,7 @@ ul {
   height: 1px;
   margin: 80px auto 60px;
   text-align: center;
-  width: 8%;
+  width: 100%;
 }
 .post-block:last-of-type .post-eof {
   display: none;
@@ -1940,10 +1940,10 @@ ul {
 .rtl.post-body ul,
 .rtl.post-body ol {
   direction: rtl;
-  font-family: UKIJ Ekran;
+  font-family: "Roboto Mono", UKIJ Ekran;
 }
 .rtl.post-title {
-  font-family: UKIJ Ekran;
+  font-family: "Roboto Mono", , UKIJ Ekran;
 }
 .post-tags {
   margin-top: 40px;
