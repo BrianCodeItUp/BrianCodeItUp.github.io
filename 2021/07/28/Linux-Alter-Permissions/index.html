@@ -23,25 +23,20 @@
     var CONFIG = {"hostname":"briancodeitup.blog","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="了解 Command 的輸入與輸出方式，如何傳遞 Command 的結果給下個 Command，可以讓你真正感受到 Shell 的強大，廢話不多說就馬上開始吧！ Command 的 Input 和 Output給 Command輸入的資料可以是 Standard Input 或者是參數, Command 執行完的結果是 Standard Output 或是Standard Error，Standa">
+  <meta name="description" content="chmodTo change the permissions of a file or directory, we can use the chmod command (change mode). To use chmod to alter permissions, we need to tell it:  Who we are changing permission for? What chan">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux Command 入門 (二)">
-<meta property="og:url" content="https://briancodeitup.blog/2021/07/26/Linux-Command-%E5%85%A5%E9%96%80-%E4%BA%8C/index.html">
+<meta property="og:title" content="Linux | Alter Permissions">
+<meta property="og:url" content="https://briancodeitup.blog/2021/07/28/Linux-Alter-Permissions/index.html">
 <meta property="og:site_name" content="Brian&#39;s Blog">
-<meta property="og:description" content="了解 Command 的輸入與輸出方式，如何傳遞 Command 的結果給下個 Command，可以讓你真正感受到 Shell 的強大，廢話不多說就馬上開始吧！ Command 的 Input 和 Output給 Command輸入的資料可以是 Standard Input 或者是參數, Command 執行完的結果是 Standard Output 或是Standard Error，Standa">
+<meta property="og:description" content="chmodTo change the permissions of a file or directory, we can use the chmod command (change mode). To use chmod to alter permissions, we need to tell it:  Who we are changing permission for? What chan">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i.imgur.com/S0DNKsr.png">
-<meta property="og:image" content="https://i.imgur.com/7InBtfE.png">
-<meta property="og:image" content="https://i.imgur.com/cOstJur.png">
-<meta property="og:image" content="https://i.imgur.com/F9hpARj.png">
-<meta property="article:published_time" content="2021-07-26T03:23:59.000Z">
-<meta property="article:modified_time" content="2021-07-26T03:44:02.718Z">
+<meta property="article:published_time" content="2021-07-28T01:27:56.000Z">
+<meta property="article:modified_time" content="2021-07-28T01:35:16.186Z">
 <meta property="article:author" content="Brian Chen">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i.imgur.com/S0DNKsr.png">
 
-<link rel="canonical" href="https://briancodeitup.blog/2021/07/26/Linux-Command-%E5%85%A5%E9%96%80-%E4%BA%8C/">
+<link rel="canonical" href="https://briancodeitup.blog/2021/07/28/Linux-Alter-Permissions/">
 
 
 <script id="page-configurations">
@@ -54,7 +49,7 @@
   };
 </script>
 
-  <title>Linux Command 入門 (二) | Brian's Blog</title>
+  <title>Linux | Alter Permissions | Brian's Blog</title>
   
 
 
@@ -175,7 +170,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/07/26/Linux-Command-%E5%85%A5%E9%96%80-%E4%BA%8C/">
+    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/07/28/Linux-Alter-Permissions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -188,7 +183,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Linux Command 入門 (二)
+          Linux | Alter Permissions
         </h1>
 
         <div class="post-meta">
@@ -199,7 +194,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-07-26 11:23:59 / Modified: 11:44:02" itemprop="dateCreated datePublished" datetime="2021-07-26T11:23:59+08:00">2021-07-26</time>
+              <time title="Created: 2021-07-28 09:27:56 / Modified: 09:35:16" itemprop="dateCreated datePublished" datetime="2021-07-28T09:27:56+08:00">2021-07-28</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -222,37 +217,165 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>了解 Command 的輸入與輸出方式，如何傳遞 Command 的結果給下個 Command，可以讓你真正感受到 Shell 的強大，廢話不多說就馬上開始吧！</p>
-<h2 id="Command-的-Input-和-Output"><a href="#Command-的-Input-和-Output" class="headerlink" title="Command 的 Input 和 Output"></a>Command 的 Input 和 Output</h2><p>給 Command輸入的資料可以是 Standard Input 或者是參數, Command 執行完的結果是 Standard Output 或是Standard Error，Standard Output 和 Error 預設的輸出位置是 Terminal</p>
+        <h2 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h2><p>To change the permissions of a file or directory, we can use the <code>chmod</code> command (change mode).</p>
+<p>To use <code>chmod</code> to alter permissions, we need to tell it:</p>
+<ul>
+<li><strong>Who</strong> we are changing permission for?</li>
+<li><strong>What</strong> change are we making?  Adding? Removing?</li>
+<li><strong>Which</strong> permissions are we setting?</li>
+</ul>
 <span id="more"></span>
-<p>Standard Input: 預設是鍵盤輸入</p>
-<p><img src="https://i.imgur.com/S0DNKsr.png" alt="imgur"><br>我們用 <code>cat</code> command 舉例，我們先查看 <code>cat</code> 指令的 man page<br><img src="https://i.imgur.com/7InBtfE.png" alt="imgur"><br>說明寫著，如果沒有給 file 參數的話，就會從 standard input 讀取</p>
-<p>我們試試看只給 <code>cat</code> command 不給參數後，我們就可以打字用 input 給 <code>cat</code><br><img src="https://i.imgur.com/cOstJur.png" alt="imgur"></p>
-<h2 id="Rediretion"><a href="#Rediretion" class="headerlink" title="Rediretion"></a>Rediretion</h2><p>將 Standard Iput, Out, Error 的 data stream 轉向非 terminal 的地方</p>
-<p>每個 data stream 都有其代表的數字</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod mode file</span><br></pre></td></tr></table></figure>
+
+<p><strong><u>who</u></strong></p>
 <ul>
-<li>standard input: 0</li>
-<li>standard output: 1</li>
-<li>standard error: 2</li>
+<li><code>u</code>: user(the owner of the file)</li>
+<li><code>g</code>: group(members of the group the file belongs to)</li>
+<li><code>o</code>: other(the “world”)</li>
+<li><code>a</code>: all of the above</li>
 </ul>
-<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><p><strong>Standard Output 範例:</strong><br><code>cat 1&gt; output.txt</code> 裡的 1 就代表 standard output,  <code>&gt;</code> 代表輸出的位置，也可以省略 1 <code>cat &gt; output.txt</code></p>
-<p>如果你已經有 output.txt 檔了，Linux 會其清空檔案後再輸入，術語叫 truncation，如果你不想要原本檔案的資料被清空，則可以用 <code>cat &gt;&gt; output.txt</code>, <code>&gt;&gt;</code> 為 appending 的符號<br><strong>Standard Error 範例:</strong> <code>cat -k bla 2&gt; error.txt</code><br><strong>Standard Output 和 Error 都輸出:</strong> <code>cat 1&gt; output.txt 2&gt;error.txt</code><br><strong>Standard Input:</strong> 我們讀取一個檔案的資料當作 standard input, <code>cat 0&lt; inpput.txt</code> 或是 <code>cat &lt; inpput.txt</code></p>
-<p><strong>練習</strong>: 利用 <code>cat</code> command 讀取某個檔案的內容後寫入 hello.txt<br><strong>答案</strong>: <code>cat &lt; input.txt &gt; hello.txt</code></p>
-<h2 id="Piping"><a href="#Piping" class="headerlink" title="Piping"></a>Piping</h2><p>利用 <code>|</code> 符號可以將 command 的 standard output 轉為下個 command 的 standard input，並且可以不斷接下去</p>
-<p>語法: <code>command1 [-options] [args] | command2 [-options] [args] | ...</code></p>
-<p><strong><u>Q: 如果我們現在希望將 <code>date</code> 指令的第一個欄位的值，該怎麼做呢？</u></strong></p>
-<p><strong>利用 redirection:</strong></p>
+<p><strong><u>what</u></strong></p>
 <ul>
-<li>將 <code>date</code> 指令的 output 存在 date.txt: <code>date &gt; date.txt</code></li>
-<li><code>cut</code> 指令讀取 date.txt 後再取第一個欄位: <code>cut &lt; date.txt -d &quot; &quot; -f 1</code></li>
+<li><code>-</code>: removes the permission</li>
+<li><code>+</code>: grants the permission</li>
+<li><code>=</code>: set a permission and removes others</li>
 </ul>
-<p><strong>利用 Piping:</strong></p>
+<p><strong><u>which</u></strong></p>
 <ul>
-<li>將 <code>date</code> 的 standard output 轉為 <code>cut</code>  standard input 然後執行:<br><code>date | cut -d &quot; &quot; -f 1</code></li>
+<li><code>r</code>: the read permission</li>
+<li><code>w</code>: the write permission</li>
+<li><code>x</code>: the execute permission</li>
 </ul>
-<h3 id="tee-指令"><a href="#tee-指令" class="headerlink" title="tee 指令"></a>tee 指令</h3><p>當我們希望指令的輸出可以同時<strong>產生檔案</strong>跟<strong>變為下個指令的輸入</strong>時，我們可以利用 <code>tee</code> 指令，<br><code>tee</code> 指令就像多了一個出口的水管<br><img src="https://i.imgur.com/F9hpARj.png" alt="imgur"><br><strong>Q: 如果我們想 <code>date</code> 將完整的日期寫入 full_date.txt 同時取得 <code>date</code> 輸出的第一個欄位，指令該怎麼寫？</strong><br>A: <code>date | tee full_date.txt | cut -d &quot; &quot; -f 1</code></p>
-<h3 id="xargs"><a href="#xargs" class="headerlink" title="xargs"></a>xargs</h3><p>某些指令不接受 standard input，只接受 command args, 像是 <code>echo</code> 指令，但我們可以使用 <code>xargs</code> 來接前面指令 piping 過來的 standard input 轉換成 command args，給 <code>echo</code> 指令當參數</p>
-<p>ex: <code>date | xargs echo</code></p>
+<h3 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h3><p><strong>Add write permissions to the group</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod g+w file.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>Remove write permissions from all</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod a-w file.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>Add executable permissions for owner</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod u+x file.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>Set permissions to read ONLY for all</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod a=r file.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>Add permissions to read and executable to the file</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod u+wx happy.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="chmod-Octals-base-8"><a href="#chmod-Octals-base-8" class="headerlink" title="chmod Octals (base 8)"></a>chmod Octals (base 8)</h2><p><code>chmod</code> also supports another way of representing permission  patterns: octal numbers(base 8). Each digit in an octal number represents 3 binary digits.</p>
+<table>
+<thead>
+<tr>
+<th>Octal</th>
+<th>Binary</th>
+<th>File Mode</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>000</td>
+<td>—</td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>001</td>
+<td>–x</td>
+<td></td>
+</tr>
+<tr>
+<td>2</td>
+<td>010</td>
+<td>-w-</td>
+<td></td>
+</tr>
+<tr>
+<td>3</td>
+<td>011</td>
+<td>-wx</td>
+<td></td>
+</tr>
+<tr>
+<td>4</td>
+<td>100</td>
+<td>r–</td>
+<td></td>
+</tr>
+<tr>
+<td>5</td>
+<td>101</td>
+<td>r-x</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>110</td>
+<td>rw-</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>111</td>
+<td>rwx</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="Demo-1"><a href="#Demo-1" class="headerlink" title="Demo"></a>Demo</h3><p><strong><u>Q: Alter the file permissions to</u></strong></p>
+<ul>
+<li><strong>user: rw_</strong></li>
+<li><strong>group: r__</strong></li>
+<li><strong>other: r__</strong></li>
+</ul>
+<p><strong>A:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>User</th>
+<th>Group</th>
+<th>Other</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Octal</td>
+<td>6</td>
+<td>4</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>Binary</td>
+<td>110</td>
+<td>100</td>
+<td>100</td>
+<td></td>
+</tr>
+<tr>
+<td>Permissions</td>
+<td>rw_</td>
+<td>r__</td>
+<td>r__</td>
+<td></td>
+</tr>
+</tbody></table>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod 644 file.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="Change-Identity-su-command"><a href="#Change-Identity-su-command" class="headerlink" title="Change Identity (su command)"></a>Change Identity (su command)</h2><p>We can use the <code>su</code> command to start a shell as another user within our shell session.</p>
+<p><strong>change the currnet shell user to “kitty”</strong><br>NOTE: <code>-</code> or <code>--login</code> option will change the current directory, it is the recommanded option to prevent side effects caused by mixing environments.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su - kitty</span><br></pre></td></tr></table></figure>
+
+<p>using <code>exit</code> command to exit the enviroment of the subsitube user.</p>
+<h2 id="Root-User"><a href="#Root-User" class="headerlink" title="Root User"></a>Root User</h2><p>The root user can run any command and access any file on the machine, regardless of the file’s actual owner.</p>
+<p>Based on the reason above, the root user could easily damage the system by running wrong command. Therefore, Ubuntu locks the root user by default.</p>
+<h2 id="Using-The-Sudo-Command"><a href="#Using-The-Sudo-Command" class="headerlink" title="Using The Sudo Command"></a>Using The Sudo Command</h2><p>Even if the root user is locked by default, we can still run specific commands as the root user by using the <code>sudo</code> command.</p>
+<h2 id="Chaning-ownwership-Chown-command"><a href="#Chaning-ownwership-Chown-command" class="headerlink" title="Chaning ownwership (Chown command)"></a>Chaning ownwership (Chown command)</h2><p>The <code>chown</code> command is used to change the owner and/or the group owner of a specific file or directory.</p>
+<h3 id="Demo-2"><a href="#Demo-2" class="headerlink" title="Demo"></a>Demo</h3><p><strong>Make “kevin” the owner of file.tx</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chown kevin file.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>Make “test_group” as the group owner of file.txt</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown :test_group file.txt</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -271,13 +394,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/07/23/Linux-Command-%E5%85%A5%E9%96%80-%E4%B8%80/" rel="prev" title="Linux Command 入門(一)">
-      <i class="fa fa-chevron-left"></i> Linux Command 入門(一)
+    <a href="/2021/07/27/Understand-Linux-Permissions/" rel="prev" title="Linux | Understand Permissions">
+      <i class="fa fa-chevron-left"></i> Linux | Understand Permissions
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/07/27/Understand-Linux-Permissions/" rel="next" title="Linux | Understand Permissions">
-      Linux | Understand Permissions <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -336,7 +456,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-%E7%9A%84-Input-%E5%92%8C-Output"><span class="nav-number">1.</span> <span class="nav-text">Command 的 Input 和 Output</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Rediretion"><span class="nav-number">2.</span> <span class="nav-text">Rediretion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example"><span class="nav-number">2.1.</span> <span class="nav-text">Example</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Piping"><span class="nav-number">3.</span> <span class="nav-text">Piping</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tee-%E6%8C%87%E4%BB%A4"><span class="nav-number">3.1.</span> <span class="nav-text">tee 指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#xargs"><span class="nav-number">3.2.</span> <span class="nav-text">xargs</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#chmod"><span class="nav-number">1.</span> <span class="nav-text">chmod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo"><span class="nav-number">1.1.</span> <span class="nav-text">Demo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chmod-Octals-base-8"><span class="nav-number">2.</span> <span class="nav-text">chmod Octals (base 8)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-1"><span class="nav-number">2.1.</span> <span class="nav-text">Demo</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Change-Identity-su-command"><span class="nav-number">3.</span> <span class="nav-text">Change Identity (su command)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Root-User"><span class="nav-number">4.</span> <span class="nav-text">Root User</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-The-Sudo-Command"><span class="nav-number">5.</span> <span class="nav-text">Using The Sudo Command</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chaning-ownwership-Chown-command"><span class="nav-number">6.</span> <span class="nav-text">Chaning ownwership (Chown command)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Demo-2"><span class="nav-number">6.1.</span> <span class="nav-text">Demo</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
