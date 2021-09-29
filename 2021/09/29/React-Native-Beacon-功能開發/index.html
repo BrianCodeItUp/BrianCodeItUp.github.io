@@ -23,11 +23,19 @@
     var CONFIG = {"hostname":"briancodeitup.blog","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Brian&#39;s Blog">
-<meta property="og:url" content="https://briancodeitup.blog/index.html">
+  <meta name="description" content="Tags: #beacon Beacon什麼是低功耗藍芽低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:  Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置 Central Device(中心裝置): 一般是智慧型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Native Beacon 功能開發">
+<meta property="og:url" content="https://briancodeitup.blog/2021/09/29/React-Native-Beacon-%E5%8A%9F%E8%83%BD%E9%96%8B%E7%99%BC/index.html">
 <meta property="og:site_name" content="Brian&#39;s Blog">
+<meta property="og:description" content="Tags: #beacon Beacon什麼是低功耗藍芽低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:  Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置 Central Device(中心裝置): 一般是智慧型">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/7437B4E1-64D7-4922-8B81-569C216F683E_1">
+<meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/44ED414D-2431-4F69-A174-CECEE6B458BC_1">
+<meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/9FCD9237-AAD1-49E8-B90B-E12961ABC9FD_1">
+<meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/730A1806-51EA-4887-94B3-6DC386BDB8D7_1">
+<meta property="article:published_time" content="2021-09-29T02:26:25.000Z">
+<meta property="article:modified_time" content="2021-09-29T02:28:06.394Z">
 <meta property="article:author" content="Brian Chen">
 <meta property="article:tag" content="Frontend">
 <meta property="article:tag" content="Backend">
@@ -38,21 +46,22 @@
 <meta property="article:tag" content="react native">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/7437B4E1-64D7-4922-8B81-569C216F683E_1">
 
-<link rel="canonical" href="https://briancodeitup.blog/">
+<link rel="canonical" href="https://briancodeitup.blog/2021/09/29/React-Native-Beacon-%E5%8A%9F%E8%83%BD%E9%96%8B%E7%99%BC/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'en'
   };
 </script>
 
-  <title>Brian's Blog - I'm Brian Chen. I'm a frontend developer on the way to be a backend developer</title>
+  <title>React Native Beacon 功能開發 | Brian's Blog</title>
   
 
 
@@ -166,9 +175,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
@@ -184,10 +194,9 @@
       <meta itemprop="name" content="Brian's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/09/29/React-Native-Beacon-%E5%8A%9F%E8%83%BD%E9%96%8B%E7%99%BC/" class="post-title-link" itemprop="url">React Native Beacon 功能開發</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          React Native Beacon 功能開發
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -211,7 +220,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Tags: #beacon</p>
+        <p>Tags: #beacon</p>
 <h1 id="Beacon"><a href="#Beacon" class="headerlink" title="Beacon"></a>Beacon</h1><h2 id="什麼是低功耗藍芽"><a href="#什麼是低功耗藍芽" class="headerlink" title="什麼是低功耗藍芽"></a>什麼是低功耗藍芽</h2><p>低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:</p>
 <ol>
 <li>Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置</li>
@@ -283,489 +292,30 @@
 <p>可以，但是需要經由廠商提供的 App 或 SDK </p>
 <p>Question reference: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/27917630/changing-the-uuid-major-and-minor-values-of-an-ibeacon">Stack Overflow</a> , <a target="_blank" rel="noopener" href="https://developer.apple.com/forums/thread/30806">Apple Developer Forums</a></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/07/30/Python-%E6%AA%94%E6%A1%88%E8%AE%80%E5%AF%AB-I-O/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Brian Chen">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/30/Python-%E6%AA%94%E6%A1%88%E8%AE%80%E5%AF%AB-I-O/" class="post-title-link" itemprop="url">Python 檔案讀寫(File I/O)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-07-30 11:24:51 / Modified: 11:37:24" itemprop="dateCreated datePublished" datetime="2021-07-30T11:24:51+08:00">2021-07-30</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_file = <span class="built_in">open</span>(<span class="string">&#x27;your_file.txt&#x27;</span>)</span><br><span class="line"></span><br><span class="line">text = my_file.read()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(text) <span class="comment"># hello world</span></span><br><span class="line"></span><br><span class="line">my_file.close()</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/30/Python-%E6%AA%94%E6%A1%88%E8%AE%80%E5%AF%AB-I-O/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/07/29/Python-Basic/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Brian Chen">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/29/Python-Basic/" class="post-title-link" itemprop="url">Python 基礎語法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-07-29 10:29:58 / Modified: 11:08:52" itemprop="dateCreated datePublished" datetime="2021-07-29T10:29:58+08:00">2021-07-29</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>此篇是集結 Python 所有的基礎語法內容，我將此篇當作學習筆記，需要用到時才回來複習，但未覆蓋到 List Unpacking 的用法，<br>關於 List Unpacking 的使用方式可以參考 Mike 的這篇文章 <a target="_blank" rel="noopener" href="https://www.learncodewithmike.com/2019/12/python-unpacking.html">Python Unpacking實用技巧分享</a></p>
-<h2 id="Data-Type"><a href="#Data-Type" class="headerlink" title="Data Type"></a>Data Type</h2><ul>
-<li>int</li>
-<li>float</li>
-<li>bool</li>
-<li>str</li>
-<li>list: 動態的 Array， Javascript Array 類似</li>
-<li>tuple: 可以想成是 immuable 的 list<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_tuple = (<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br></pre></td></tr></table></figure></li>
-<li>set: collection of uniqe values<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">my_set = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;</span><br></pre></td></tr></table></figure></li>
-<li>dict: Javascript 的 Object, Java 的 HashMap</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/29/Python-Basic/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/30/Python-%E6%AA%94%E6%A1%88%E8%AE%80%E5%AF%AB-I-O/" rel="prev" title="Python 檔案讀寫(File I/O)">
+      <i class="fa fa-chevron-left"></i> Python 檔案讀寫(File I/O)
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/07/28/Linux-Alter-Permissions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Brian Chen">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/28/Linux-Alter-Permissions/" class="post-title-link" itemprop="url">Linux | Alter Permissions</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-07-28 09:27:56 / Modified: 09:45:54" itemprop="dateCreated datePublished" datetime="2021-07-28T09:27:56+08:00">2021-07-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="chmod"><a href="#chmod" class="headerlink" title="chmod"></a>chmod</h2><p>To change the permissions of a file or directory, we can use the <code>chmod</code> command (change mode).</p>
-<p>To use <code>chmod</code> to alter permissions, we need to tell it:</p>
-<ul>
-<li><strong>Who</strong> we are changing permission for?</li>
-<li><strong>What</strong> change are we making?  Adding? Removing?</li>
-<li><strong>Which</strong> permissions are we setting?</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/28/Linux-Alter-Permissions/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/07/27/Understand-Linux-Permissions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Brian Chen">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/27/Understand-Linux-Permissions/" class="post-title-link" itemprop="url">Linux | Understand Permissions</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-07-27 10:29:50" itemprop="dateCreated datePublished" datetime="2021-07-27T10:29:50+08:00">2021-07-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-28 09:47:35" itemprop="dateModified" datetime="2021-07-28T09:47:35+08:00">2021-07-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Unix or Unux-like system like mac or linux allow multiple users in a single machine.<br>As regular users, we don’t have permission to write or even read every file on the machine.<br>For example, if i try to read the file <strong>/etc/sudoers</strong> using <code>cat</code> . I get a “permission denied” message.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/27/Understand-Linux-Permissions/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/07/26/Linux-Command-%E5%85%A5%E9%96%80-%E4%BA%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Brian Chen">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/26/Linux-Command-%E5%85%A5%E9%96%80-%E4%BA%8C/" class="post-title-link" itemprop="url">Linux Command 入門 (二)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-07-26 11:23:59 / Modified: 11:44:02" itemprop="dateCreated datePublished" datetime="2021-07-26T11:23:59+08:00">2021-07-26</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>了解 Command 的輸入與輸出方式，如何傳遞 Command 的結果給下個 Command，可以讓你真正感受到 Shell 的強大，廢話不多說就馬上開始吧！</p>
-<h2 id="Command-的-Input-和-Output"><a href="#Command-的-Input-和-Output" class="headerlink" title="Command 的 Input 和 Output"></a>Command 的 Input 和 Output</h2><p>給 Command輸入的資料可以是 Standard Input 或者是參數, Command 執行完的結果是 Standard Output 或是Standard Error，Standard Output 和 Error 預設的輸出位置是 Terminal</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/26/Linux-Command-%E5%85%A5%E9%96%80-%E4%BA%8C/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/07/23/Linux-Command-%E5%85%A5%E9%96%80-%E4%B8%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Brian Chen">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/23/Linux-Command-%E5%85%A5%E9%96%80-%E4%B8%80/" class="post-title-link" itemprop="url">Linux Command 入門(一)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-07-23 21:28:16" itemprop="dateCreated datePublished" datetime="2021-07-23T21:28:16+08:00">2021-07-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-24 01:47:41" itemprop="dateModified" datetime="2021-07-24T01:47:41+08:00">2021-07-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Linux-指令基本結構"><a href="#Linux-指令基本結構" class="headerlink" title="Linux 指令基本結構"></a>Linux 指令基本結構</h2><p><strong>Command 結構</strong>: <code>command 名稱</code> + <code>option</code> + <code>inputs</code>, <strong>command 是有分大小寫的</strong></p>
-<p><strong>命令是如何被執行的</strong>:<code>$PATH</code> 定義了可執行檔的位置，輸入命令後，會在有定義 <code>$PATH</code> 的文件夾中找尋執行檔，如果某個執行某個執行檔的名稱相同，會由最左邊的檔案夾被執行</p>
-<p><img src="https://i.imgur.com/ZyUev5I.png" alt="image"></p>
-<p><strong>which</strong>: 找到此命令的執行檔位置</p>
-<p><img src="https://i.imgur.com/Mu28VsG.png" alt="image"></p>
-<p><strong>command 可以接受多個參數</strong>: 找 2017 年 12 月的月曆</p>
-<p><img src="https://i.imgur.com/kpU5B3E.png" alt="image"></p>
-<p><strong>長、短 option</strong>: <code>-v</code> 是短 option, <code>--version</code> 是長 option, 但是不一定會有長 option</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/23/Linux-Command-%E5%85%A5%E9%96%80-%E4%B8%80/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -818,6 +368,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Beacon"><span class="nav-number">1.</span> <span class="nav-text">Beacon</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF%E4%BD%8E%E5%8A%9F%E8%80%97%E8%97%8D%E8%8A%BD"><span class="nav-number">1.1.</span> <span class="nav-text">什麼是低功耗藍芽</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8E%E5%8A%9F%E8%80%97%E8%97%8D%E7%89%99%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.1.</span> <span class="nav-text">低功耗藍牙工作原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Beacon"><span class="nav-number">1.2.</span> <span class="nav-text">什麼是 Beacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%9C%E6%96%BC-iBeacon"><span class="nav-number">1.3.</span> <span class="nav-text">關於 iBeacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-%E6%98%AF%E5%90%A6%E4%B9%9F%E6%94%AF%E6%8F%B4-iBeacon"><span class="nav-number">1.4.</span> <span class="nav-text">Android 是否也支援 iBeacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Native-%E7%9B%B8%E9%97%9C%E7%9A%84%E5%A5%97%E4%BB%B6"><span class="nav-number">1.5.</span> <span class="nav-text">React-Native 相關的套件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E4%BB%B6%E8%88%87%E5%BD%B1%E7%89%87"><span class="nav-number">1.6.</span> <span class="nav-text">參考文件與影片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%97%8D%E8%8A%BD"><span class="nav-number">1.6.1.</span> <span class="nav-text">藍芽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beacon-1"><span class="nav-number">1.6.2.</span> <span class="nav-text">Beacon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iBeacon-Apple-Docs"><span class="nav-number">1.6.3.</span> <span class="nav-text">iBeacon Apple Docs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FAQ"><span class="nav-number">1.7.</span> <span class="nav-text">FAQ</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
