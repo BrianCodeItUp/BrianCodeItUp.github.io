@@ -197,7 +197,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-29 10:26:25 / Modified: 10:28:06" itemprop="dateCreated datePublished" datetime="2021-09-29T10:26:25+08:00">2021-09-29</time>
+              <time title="Created: 2021-09-29 10:26:25 / Modified: 10:31:04" itemprop="dateCreated datePublished" datetime="2021-09-29T10:26:25+08:00">2021-09-29</time>
             </span>
 
           
@@ -211,78 +211,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Tags: #beacon</p>
-<h1 id="Beacon"><a href="#Beacon" class="headerlink" title="Beacon"></a>Beacon</h1><h2 id="什麼是低功耗藍芽"><a href="#什麼是低功耗藍芽" class="headerlink" title="什麼是低功耗藍芽"></a>什麼是低功耗藍芽</h2><p>低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:</p>
+          <h2 id="什麼是低功耗藍芽"><a href="#什麼是低功耗藍芽" class="headerlink" title="什麼是低功耗藍芽"></a>什麼是低功耗藍芽</h2><p>低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:</p>
 <ol>
 <li>Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置</li>
 <li>Central Device(中心裝置): 一般是智慧型手機，一般為訊號的接收方</li>
 </ol>
-<h3 id="低功耗藍牙工作原理"><a href="#低功耗藍牙工作原理" class="headerlink" title="低功耗藍牙工作原理"></a>低功耗藍牙工作原理</h3><p>外圍裝置在未被連接時會不斷對外廣播(Advertisements), 中心裝置在接收到廣播內容後可以自行決定要不要連接</p>
-<p><img src="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/7437B4E1-64D7-4922-8B81-569C216F683E_1" alt="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/7437B4E1-64D7-4922-8B81-569C216F683E_1"></p>
-<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=NSkIHdV6NoY">What is BLE? (2020) | Bluetooth Low Energy | Learn Technology in 5 Minutes</a></p>
-<h2 id="什麼是-Beacon"><a href="#什麼是-Beacon" class="headerlink" title="什麼是 Beacon"></a>什麼是 Beacon</h2><p>利用 ble 外圍裝置的廣播特性，廣播特定格式訊息的低功耗藍芽裝置，可以讓中心裝置在聽到此種廣播訊息時執行相對應指令，ex: 推播廣告，跳出資訊彈窗等，目前市場主流的 Beacon 協議有 <a target="_blank" rel="noopener" href="https://developer.apple.com/ibeacon/">iBeacon</a>(Apple), <a target="_blank" rel="noopener" href="https://developers.google.com/beacons/eddystone">Eddystone</a>(Google), <a target="_blank" rel="noopener" href="https://altbeacon.org/">AltBeacon</a>(Open Source), 三者中最熱門的則是 iBeacon</p>
-<p>Beacon 使用案例</p>
-<p><img src="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/44ED414D-2431-4F69-A174-CECEE6B458BC_1" alt="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/44ED414D-2431-4F69-A174-CECEE6B458BC_1"></p>
-<h2 id="關於-iBeacon"><a href="#關於-iBeacon" class="headerlink" title="關於 iBeacon"></a>關於 iBeacon</h2><p>iBeacon 為 Apple 在 2013 WWDC 上發布的 BLE 的應用技術，其將 BLE 廣播資料格式定為</p>
-<p><img src="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/9FCD9237-AAD1-49E8-B90B-E12961ABC9FD_1" alt="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/9FCD9237-AAD1-49E8-B90B-E12961ABC9FD_1"></p>
-<p>範例：</p>
-<p><img src="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/730A1806-51EA-4887-94B3-6DC386BDB8D7_1" alt="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/730A1806-51EA-4887-94B3-6DC386BDB8D7_1"></p>
-<p>同一家公司使用一個UUID，依照城市不同用不同的Major value，依照商品不同用不同的Minor Value</p>
-<p>名詞解釋</p>
-<ul>
-<li>Region: Apple 將 beacon 信號範圍認定為一個 Geofence（虛擬的地理圍欄或區塊）, 由上述的 uuid, major, minor 和 identifier (這個 region 的名稱 ex: 2 樓辦公室)來定義, 定義 uuid 和 identifier 是必填，major 和 minor 可以依照需求選填, 一個 App 最多一次同時偵測 20 個 Region</li>
-<li>Ranging: 裝置在偵測與 beacon 距離的行為，只能在 App 前景使用<ul>
-<li>觸發 eventName: didRangeBeacons</li>
-<li>所需權限：Location When In Use Usage</li>
-</ul>
-</li>
-<li>Monitoring: 監測手機是否進到 Region 或離開 Region，能在前景、背景、未打開 App 的情境下使用<ul>
-<li>觸發 eventName: didEnterRegion, didExitRegion</li>
-<li>所需權限：Location Always Usage</li>
-<li>注意：iOS 預設背景偵測只會有幾秒的時間來處理</li>
-</ul>
-</li>
-</ul>
-<h2 id="Android-是否也支援-iBeacon"><a href="#Android-是否也支援-iBeacon" class="headerlink" title="Android 是否也支援 iBeacon"></a>Android 是否也支援 iBeacon</h2><p>是的，iBeacon 只是一種 BLE 廣播的資料格式，Android 可以偵測此格式的資料後，讓 App 做對應處理，目前已有 <a target="_blank" rel="noopener" href="https://github.com/AltBeacon/android-beacon-library">Android Library</a> 讓 Android 可以像 iOS 一樣進行 Ranging 和 Monitoring</p>
-<p>Android 需要地點權限來偵測 beacon, 若未開啟會掃不到</p>
-<p>新增以下 permission 在 <code>AndroidManifest.xml</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//  old version of Android</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot; /&gt;</span><br><span class="line">// SDK 29+</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot; /&gt;</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.ACCESS_BACKGROUND_LOCATION&quot; /&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="React-Native-相關的套件"><a href="#React-Native-相關的套件" class="headerlink" title="React-Native 相關的套件"></a>React-Native 相關的套件</h2><p><a target="_blank" rel="noopener" href="https://github.com/MacKentoch/react-native-beacons-manager">react-native-beacons-manager</a> 是維護年份相對較近的套件，但目前已經 3 年左右沒有再發布新版本，目前是使用 github 上最新的 git commit 點來做安裝</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;react-native-beacons-manager&quot;: &quot;git://github.com/MacKentoch/react-native-beacons-manager.git#d118c87&quot;,</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
-
-<p>目前實測當 App 在前景時 Ranging 和 Monitoring 都能夠正常運作</p>
-<h2 id="參考文件與影片"><a href="#參考文件與影片" class="headerlink" title="參考文件與影片"></a>參考文件與影片</h2><h3 id="藍芽"><a href="#藍芽" class="headerlink" title="藍芽"></a>藍芽</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=Hn0Nt9qW0IU">你不了解的『藍芽』，硬核無線技術(上)</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=nw_dqxh4ikY">你不了解的『藍芽』，硬核無線技術(下)</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.techmarks.com/bluetooth-low-energy/">淺談 BLE（Bluetooth Low Energy低功耗藍牙）Android、iOS</a></li>
-<li><a target="_blank" rel="noopener" href="https://medium.com/@nalydadad/%E6%A6%82%E8%BF%B0-gatt-%E8%97%8D%E8%8A%BD%E5%82%B3%E8%BC%B8-9fa218ce6022">概述 GATT 藍芽傳輸</a></li>
-</ul>
-<h3 id="Beacon-1"><a href="#Beacon-1" class="headerlink" title="Beacon"></a>Beacon</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://developers.google.com/beacons/get-started">Get Started with Beacon(Android Official Document)</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.beaconstac.com/2018/08/ble-made-simple-a-complete-guide-to-ble-bluetooth-beacons/">How Beacon works?</a></li>
-<li><a target="_blank" rel="noopener" href="https://kontakt.io/blog/ibeacon-trademark-technology/">iBeacon. It’s a Trademark, Not a Technology.</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=m4hxo9bgmag">ESP32 #6: BLE / Bluetooth iBeacon implementation</a></li>
-<li><a target="_blank" rel="noopener" href="https://os.mbed.com/blog/entry/BLE-Beacons-URIBeacon-AltBeacons-iBeacon/">Understanding the different types of BLE Beacons</a></li>
-<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/corelocation/turning_an_ios_device_into_an_ibeacon_device">Turning an iOS Device into an iBeacon Device</a></li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/20988671/how-to-scan-ibeacon-signals-without-specifying-uuid">How to scan iBeacon signals without specifying UUID?</a></li>
-<li><a target="_blank" rel="noopener" href="https://cg2010studio.com/2018/12/23/ios-ibeacon%e8%83%8c%e6%99%af%e5%81%b5%e6%b8%ac%e6%b5%81%e7%a8%8b/">ibeacon背景偵測流程</a></li>
-<li><a target="_blank" rel="noopener" href="https://medium.com/%E5%BD%BC%E5%BE%97%E6%BD%98%E7%9A%84-swift-ios-app-%E9%96%8B%E7%99%BC%E5%95%8F%E9%A1%8C%E8%A7%A3%E7%AD%94%E9%9B%86/swift-ibeacon-app-%E7%A8%8B%E5%BC%8F%E8%A8%AD%E8%A8%88-cd89f59f735b">Swift iBeacon App 程式設計</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.maxkit.com.tw/2015/11/ibeacon-android-client.html">iBeacon 偵測範例 - android client</a></li>
-<li><a target="_blank" rel="noopener" href="https://developer.estimote.com/">estimote api doc</a> (此 Doc 非常解釋清楚 ，請優先閱讀)</li>
-</ul>
-<h3 id="iBeacon-Apple-Docs"><a href="#iBeacon-Apple-Docs" class="headerlink" title="iBeacon Apple Docs"></a>iBeacon Apple Docs</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://developer.apple.com/ibeacon/Getting-Started-with-iBeacon.pdf">Getting Started with iBeacon</a> (此為 Apple 完整說明 iBeacon 運作方式文件，請優先閱讀)</li>
-<li>Determining the Proximity to an iBeacon Device</li>
-<li><a target="_blank" rel="noopener" href="https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/LocationAwarenessPG/RegionMonitoring/RegionMonitoring.html">Region Monitoring and iBeacon</a></li>
-<li><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/corelocation/ranging_for_beacons">Ranging for Beacons</a></li>
-</ul>
-<h2 id="FAQ"><a href="#FAQ" class="headerlink" title="FAQ"></a>FAQ</h2><ul>
-<li>可以改 Beacon 的 UUID 嗎？</li>
-</ul>
-<p>可以，但是需要經由廠商提供的 App 或 SDK </p>
-<p>Question reference: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/27917630/changing-the-uuid-major-and-minor-values-of-an-ibeacon">Stack Overflow</a> , <a target="_blank" rel="noopener" href="https://developer.apple.com/forums/thread/30806">Apple Developer Forums</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/09/29/React-Native-Beacon-%E5%8A%9F%E8%83%BD%E9%96%8B%E7%99%BC/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

@@ -23,19 +23,19 @@
     var CONFIG = {"hostname":"briancodeitup.blog","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Tags: #beacon Beacon什麼是低功耗藍芽低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:  Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置 Central Device(中心裝置): 一般是智慧型">
+  <meta name="description" content="什麼是低功耗藍芽低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:  Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置 Central Device(中心裝置): 一般是智慧型手機，一般為訊號的接收方">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React Native Beacon 功能開發">
 <meta property="og:url" content="https://briancodeitup.blog/2021/09/29/React-Native-Beacon-%E5%8A%9F%E8%83%BD%E9%96%8B%E7%99%BC/index.html">
 <meta property="og:site_name" content="Brian&#39;s Blog">
-<meta property="og:description" content="Tags: #beacon Beacon什麼是低功耗藍芽低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:  Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置 Central Device(中心裝置): 一般是智慧型">
+<meta property="og:description" content="什麼是低功耗藍芽低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:  Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置 Central Device(中心裝置): 一般是智慧型手機，一般為訊號的接收方">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/7437B4E1-64D7-4922-8B81-569C216F683E_1">
 <meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/44ED414D-2431-4F69-A174-CECEE6B458BC_1">
 <meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/9FCD9237-AAD1-49E8-B90B-E12961ABC9FD_1">
 <meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/730A1806-51EA-4887-94B3-6DC386BDB8D7_1">
 <meta property="article:published_time" content="2021-09-29T02:26:25.000Z">
-<meta property="article:modified_time" content="2021-09-29T02:28:06.394Z">
+<meta property="article:modified_time" content="2021-09-29T02:31:04.772Z">
 <meta property="article:author" content="Brian Chen">
 <meta property="article:tag" content="Frontend">
 <meta property="article:tag" content="Backend">
@@ -206,7 +206,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-09-29 10:26:25 / Modified: 10:28:06" itemprop="dateCreated datePublished" datetime="2021-09-29T10:26:25+08:00">2021-09-29</time>
+              <time title="Created: 2021-09-29 10:26:25 / Modified: 10:31:04" itemprop="dateCreated datePublished" datetime="2021-09-29T10:26:25+08:00">2021-09-29</time>
             </span>
 
           
@@ -220,12 +220,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Tags: #beacon</p>
-<h1 id="Beacon"><a href="#Beacon" class="headerlink" title="Beacon"></a>Beacon</h1><h2 id="什麼是低功耗藍芽"><a href="#什麼是低功耗藍芽" class="headerlink" title="什麼是低功耗藍芽"></a>什麼是低功耗藍芽</h2><p>低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:</p>
+        <h2 id="什麼是低功耗藍芽"><a href="#什麼是低功耗藍芽" class="headerlink" title="什麼是低功耗藍芽"></a>什麼是低功耗藍芽</h2><p>低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:</p>
 <ol>
 <li>Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置</li>
 <li>Central Device(中心裝置): 一般是智慧型手機，一般為訊號的接收方</li>
 </ol>
+<span id="more"></span>
 <h3 id="低功耗藍牙工作原理"><a href="#低功耗藍牙工作原理" class="headerlink" title="低功耗藍牙工作原理"></a>低功耗藍牙工作原理</h3><p>外圍裝置在未被連接時會不斷對外廣播(Advertisements), 中心裝置在接收到廣播內容後可以自行決定要不要連接</p>
 <p><img src="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/7437B4E1-64D7-4922-8B81-569C216F683E_1" alt="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/7437B4E1-64D7-4922-8B81-569C216F683E_1"></p>
 <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=NSkIHdV6NoY">What is BLE? (2020) | Bluetooth Low Energy | Learn Technology in 5 Minutes</a></p>
@@ -267,7 +267,7 @@
 <li><a target="_blank" rel="noopener" href="https://www.techmarks.com/bluetooth-low-energy/">淺談 BLE（Bluetooth Low Energy低功耗藍牙）Android、iOS</a></li>
 <li><a target="_blank" rel="noopener" href="https://medium.com/@nalydadad/%E6%A6%82%E8%BF%B0-gatt-%E8%97%8D%E8%8A%BD%E5%82%B3%E8%BC%B8-9fa218ce6022">概述 GATT 藍芽傳輸</a></li>
 </ul>
-<h3 id="Beacon-1"><a href="#Beacon-1" class="headerlink" title="Beacon"></a>Beacon</h3><ul>
+<h3 id="Beacon"><a href="#Beacon" class="headerlink" title="Beacon"></a>Beacon</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://developers.google.com/beacons/get-started">Get Started with Beacon(Android Official Document)</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.beaconstac.com/2018/08/ble-made-simple-a-complete-guide-to-ble-bluetooth-beacons/">How Beacon works?</a></li>
 <li><a target="_blank" rel="noopener" href="https://kontakt.io/blog/ibeacon-trademark-technology/">iBeacon. It’s a Trademark, Not a Technology.</a></li>
@@ -368,7 +368,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Beacon"><span class="nav-number">1.</span> <span class="nav-text">Beacon</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF%E4%BD%8E%E5%8A%9F%E8%80%97%E8%97%8D%E8%8A%BD"><span class="nav-number">1.1.</span> <span class="nav-text">什麼是低功耗藍芽</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8E%E5%8A%9F%E8%80%97%E8%97%8D%E7%89%99%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.1.</span> <span class="nav-text">低功耗藍牙工作原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Beacon"><span class="nav-number">1.2.</span> <span class="nav-text">什麼是 Beacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%9C%E6%96%BC-iBeacon"><span class="nav-number">1.3.</span> <span class="nav-text">關於 iBeacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-%E6%98%AF%E5%90%A6%E4%B9%9F%E6%94%AF%E6%8F%B4-iBeacon"><span class="nav-number">1.4.</span> <span class="nav-text">Android 是否也支援 iBeacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Native-%E7%9B%B8%E9%97%9C%E7%9A%84%E5%A5%97%E4%BB%B6"><span class="nav-number">1.5.</span> <span class="nav-text">React-Native 相關的套件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E4%BB%B6%E8%88%87%E5%BD%B1%E7%89%87"><span class="nav-number">1.6.</span> <span class="nav-text">參考文件與影片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%97%8D%E8%8A%BD"><span class="nav-number">1.6.1.</span> <span class="nav-text">藍芽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beacon-1"><span class="nav-number">1.6.2.</span> <span class="nav-text">Beacon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iBeacon-Apple-Docs"><span class="nav-number">1.6.3.</span> <span class="nav-text">iBeacon Apple Docs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FAQ"><span class="nav-number">1.7.</span> <span class="nav-text">FAQ</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF%E4%BD%8E%E5%8A%9F%E8%80%97%E8%97%8D%E8%8A%BD"><span class="nav-number">1.</span> <span class="nav-text">什麼是低功耗藍芽</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8E%E5%8A%9F%E8%80%97%E8%97%8D%E7%89%99%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">低功耗藍牙工作原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Beacon"><span class="nav-number">2.</span> <span class="nav-text">什麼是 Beacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%9C%E6%96%BC-iBeacon"><span class="nav-number">3.</span> <span class="nav-text">關於 iBeacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-%E6%98%AF%E5%90%A6%E4%B9%9F%E6%94%AF%E6%8F%B4-iBeacon"><span class="nav-number">4.</span> <span class="nav-text">Android 是否也支援 iBeacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Native-%E7%9B%B8%E9%97%9C%E7%9A%84%E5%A5%97%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">React-Native 相關的套件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E4%BB%B6%E8%88%87%E5%BD%B1%E7%89%87"><span class="nav-number">6.</span> <span class="nav-text">參考文件與影片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%97%8D%E8%8A%BD"><span class="nav-number">6.1.</span> <span class="nav-text">藍芽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beacon"><span class="nav-number">6.2.</span> <span class="nav-text">Beacon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iBeacon-Apple-Docs"><span class="nav-number">6.3.</span> <span class="nav-text">iBeacon Apple Docs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FAQ"><span class="nav-number">7.</span> <span class="nav-text">FAQ</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
