@@ -172,6 +172,73 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/10/18/%E4%BD%A0%E7%9C%9F%E6%87%82-Node-js-%E8%A3%A1-Libuv-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Thread-Pool%E5%97%8E%EF%BC%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Brian Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/18/%E4%BD%A0%E7%9C%9F%E6%87%82-Node-js-%E8%A3%A1-Libuv-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Thread-Pool%E5%97%8E%EF%BC%9F/" class="post-title-link" itemprop="url">你真的懂 Node.js 裡 Libuv 如何使用 Thread Pool 嗎？</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-18 01:01:10 / Modified: 01:09:09" itemprop="dateCreated datePublished" datetime="2021-10-18T01:01:10+08:00">2021-10-18</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>不廢話先上題，請問以下程式 <code>conosole.log</code>  的順序？</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> https = <span class="built_in">require</span>(<span class="string">&#x27;https&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">&#x27;crypto&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doRequest</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  https</span><br><span class="line">    .request(<span class="string">&#x27;https://www.google.com&#x27;</span>, <span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">      res.on(<span class="string">&#x27;data&#x27;</span>, <span class="function">() =&gt;</span> &#123;&#125;)</span><br><span class="line">      res.on(<span class="string">&#x27;end&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;Request:&#x27;</span>, <span class="built_in">Date</span>.now() - start);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  .end();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doHash</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  crypto.pbkdf2(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="number">100000</span>, <span class="number">512</span>, <span class="string">&#x27;sha512&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Hash:&#x27;</span>, <span class="built_in">Date</span>.now() - start);</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">doRequest();</span><br><span class="line"></span><br><span class="line">fs.readFile(<span class="string">&#x27;text.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;FS:&#x27;</span>, <span class="built_in">Date</span>.now() - start);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">doHash();</span><br><span class="line">doHash();</span><br><span class="line">doHash();</span><br><span class="line">doHash();</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/18/%E4%BD%A0%E7%9C%9F%E6%87%82-Node-js-%E8%A3%A1-Libuv-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Thread-Pool%E5%97%8E%EF%BC%9F/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/10/06/%E4%BD%BF%E7%94%A8-apollo-studio-%E8%88%87-express-session-%E7%84%A1%E6%B3%95-setCookie-%E5%95%8F%E9%A1%8C/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -851,96 +918,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/07/23/Linux-Command-%E5%85%A5%E9%96%80-%E4%B8%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Brian Chen">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/23/Linux-Command-%E5%85%A5%E9%96%80-%E4%B8%80/" class="post-title-link" itemprop="url">Linux Command 入門(一)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-07-23 21:28:16" itemprop="dateCreated datePublished" datetime="2021-07-23T21:28:16+08:00">2021-07-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-24 01:47:41" itemprop="dateModified" datetime="2021-07-24T01:47:41+08:00">2021-07-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Linux-指令基本結構"><a href="#Linux-指令基本結構" class="headerlink" title="Linux 指令基本結構"></a>Linux 指令基本結構</h2><p><strong>Command 結構</strong>: <code>command 名稱</code> + <code>option</code> + <code>inputs</code>, <strong>command 是有分大小寫的</strong></p>
-<p><strong>命令是如何被執行的</strong>:<code>$PATH</code> 定義了可執行檔的位置，輸入命令後，會在有定義 <code>$PATH</code> 的文件夾中找尋執行檔，如果某個執行某個執行檔的名稱相同，會由最左邊的檔案夾被執行</p>
-<p><img src="https://i.imgur.com/ZyUev5I.png" alt="image"></p>
-<p><strong>which</strong>: 找到此命令的執行檔位置</p>
-<p><img src="https://i.imgur.com/Mu28VsG.png" alt="image"></p>
-<p><strong>command 可以接受多個參數</strong>: 找 2017 年 12 月的月曆</p>
-<p><img src="https://i.imgur.com/kpU5B3E.png" alt="image"></p>
-<p><strong>長、短 option</strong>: <code>-v</code> 是短 option, <code>--version</code> 是長 option, 但是不一定會有長 option</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/23/Linux-Command-%E5%85%A5%E9%96%80-%E4%B8%80/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -1004,7 +986,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
