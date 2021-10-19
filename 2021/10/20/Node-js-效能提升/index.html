@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ovo&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"briancodeitup.blog","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在什麼樣的情況下需要效能提升？如果我們的程式需要進行重度的計算，而且這個任務無法像 timer, http request 等，可以非同步運行時，我們的 Request 就會被卡住 ex: const express &#x3D; require(&amp;#x27;express&amp;#x27;);const app &#x3D; express();function doWork(duration) &amp;#123;  cons">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js 效能提升">
+<meta property="og:url" content="https://briancodeitup.blog/2021/10/20/Node-js-%E6%95%88%E8%83%BD%E6%8F%90%E5%8D%87/index.html">
+<meta property="og:site_name" content="Brian&#39;s Blog">
+<meta property="og:description" content="在什麼樣的情況下需要效能提升？如果我們的程式需要進行重度的計算，而且這個任務無法像 timer, http request 等，可以非同步運行時，我們的 Request 就會被卡住 ex: const express &#x3D; require(&amp;#x27;express&amp;#x27;);const app &#x3D; express();function doWork(duration) &amp;#123;  cons">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/F8463A21-E053-42B7-82B0-037FF8DD2F3E_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/D980BCE1-6E34-430B-9D02-D4689C8ACC15_2/XaovjoA.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/CC9841BE-C8B3-4A18-9DDF-0A7BCD621497_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/8AC22B99-46B1-492C-AD9E-913F10D78FD4_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/973AF440-57E9-4F07-95B6-BA2188B92E73_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/AE2EE513-A3F9-4B74-894F-DCCE334260F2_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/271CE87B-1C32-4E06-9898-D5FB7B6EF6F9_2/Image.png">
+<meta property="article:published_time" content="2021-10-19T16:33:58.000Z">
+<meta property="article:modified_time" content="2021-10-19T16:49:53.981Z">
+<meta property="article:author" content="Brian Chen">
+<meta property="article:tag" content="node.js">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/F8463A21-E053-42B7-82B0-037FF8DD2F3E_2/Image.png">
+
+<link rel="canonical" href="https://briancodeitup.blog/2021/10/20/Node-js-%E6%95%88%E8%83%BD%E6%8F%90%E5%8D%87/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Node.js 效能提升 | Brian's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Brian's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">I'm Brian Chen. I'm a frontend developer on the way to be a backend developer</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/10/20/Node-js-%E6%95%88%E8%83%BD%E6%8F%90%E5%8D%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Brian Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Node.js 效能提升
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-20 00:33:58 / Modified: 00:49:53" itemprop="dateCreated datePublished" datetime="2021-10-20T00:33:58+08:00">2021-10-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="在什麼樣的情況下需要效能提升？"><a href="#在什麼樣的情況下需要效能提升？" class="headerlink" title="在什麼樣的情況下需要效能提升？"></a>在什麼樣的情況下需要效能提升？</h2><p>如果我們的程式需要進行重度的計算，而且這個任務無法像 timer, http request 等，可以非同步運行時，我們的 Request 就會被卡住</p>
+<p>ex:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doWork</span>(<span class="params">duration</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line">  <span class="keyword">while</span>(<span class="built_in">Date</span>.now() - start &lt; duration) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  doWork(<span class="number">5000</span>)</span><br><span class="line">  res.send(<span class="string">&#x27;&lt;h1&gt;Hi There!&lt;/h1&gt;&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123;&#125;);</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+
+<p>我們寫一個 doWork function，讓它在既定秒數內不斷跑 while 迴圈</p>
+<p>這個時如果開兩個 tab 載入頁面，你就會發現第二個載入的頁面會慢非常多，因為 server 還在處理第一個頁面，必須等第一個頁面處理完才會處理第二個頁面</p>
+<h2 id="利用-Node-js-“Cluster”-Mode-多開幾個-process-來幫忙吧！"><a href="#利用-Node-js-“Cluster”-Mode-多開幾個-process-來幫忙吧！" class="headerlink" title="利用 Node.js “Cluster” Mode 多開幾個 process 來幫忙吧！"></a>利用 Node.js “Cluster” Mode 多開幾個 process 來幫忙吧！</h2><p>因為每個 Process 都只能用單核心 CPU 來運行， 透過 Cluster 模組就可以開更多的 Process 來幫忙處理，<br>而這個Cluster的模組強大的地方在於讓我們只監聽一個Port，加上Master/Worker的概念，當收到請求後就分配給底下的Worker進行處理。</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/F8463A21-E053-42B7-82B0-037FF8DD2F3E_2/Image.png" alt="Image.png"></p>
+<p>Cluster Manager 負責監控底下 Node Server 的狀態，Cluster Manager 可以開 Node Instance, 關閉 Instance, 送資訊給 Instance</p>
+<h2 id="Cluster-如何運作？"><a href="#Cluster-如何運作？" class="headerlink" title="Cluster 如何運作？"></a>Cluster 如何運作？</h2><p>他主要是使用 <code>child_process.fork()</code> 產生新的 proccess 用此來與 master_process 溝通。</p>
+<p>如圖所示</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/D980BCE1-6E34-430B-9D02-D4689C8ACC15_2/XaovjoA.png" alt="XaovjoA.png"></p>
+<p>圖片來源: 【我可以你也可以的Node.js】第二十篇 - Node Cluster 讓你的 Thread 不再孤軍奮戰</p>
+<h2 id="預設配發方式"><a href="#預設配發方式" class="headerlink" title="預設配發方式"></a>預設配發方式</h2><p>當一個請求進來的時候進到 <code>master process</code> 然後由他去輪流指派 一個 <code>process</code> 。</p>
+<h2 id="使用-Cluster"><a href="#使用-Cluster" class="headerlink" title="使用 Cluster"></a>使用 Cluster</h2><p>使用 Cluster 時，我們可以使用 <code>cluster.isMaster</code> 屬性去判斷現在是否為 Master Process</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> cluster = <span class="built_in">require</span>(<span class="string">&#x27;cluster&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (cluster.isMaster) &#123;</span><br><span class="line">  <span class="comment">// Create child processes</span></span><br><span class="line">  <span class="comment">// Cause index.js to be executed again but in child mod</span></span><br><span class="line">  cluster.fork();</span><br><span class="line">  cluster.fork();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">doWork</span>(<span class="params">duration</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line">    <span class="keyword">while</span>(<span class="built_in">Date</span>.now() - start &lt; duration) &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    doWork(<span class="number">5000</span>)</span><br><span class="line">    res.send(<span class="string">&#x27;&lt;h1&gt;Hi There!&lt;/h1&gt;&#x27;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  app.get(<span class="string">&#x27;/fast&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.send(<span class="string">&#x27;fast&#x27;</span>);</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  app.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;server listening at port 3000&#x27;</span>)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我們新增一個不會阻塞的 route <code>/fast</code> ，由於我們現在有兩個 process 了，所以當我們開兩個 tab，一個發到 <code>/</code> ，另一個再發到 <code>/fast</code> ，我們可以發現 <code>/fast</code> 直接就返回了，沒有被上個 Request 卡死</p>
+<h2 id="既然開-Process-就可以變快，那開好開滿不就超快"><a href="#既然開-Process-就可以變快，那開好開滿不就超快" class="headerlink" title="既然開 Process 就可以變快，那開好開滿不就超快?"></a>既然開 Process 就可以變快，那開好開滿不就超快?</h2><p>我們這邊可以用 <code>ab</code> (apache-benchmark) 指令來測試開越多 child process 是否就越好</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ab -c 50 -n 500 localhost:3000/fast</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>-c</code> : concurrency 的意思, <code>-c 50</code>  同時保持有 50 Request 還處 pending 的狀態</li>
+<li><code>-n</code> : request 的總數, <code>-n 500</code> 代表總共發 500 個</li>
+</ul>
+<p><strong>測試方式：</strong>逐步增加 Child Process 和 Request</p>
+<p><strong>測試程式:</strong></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> (cluster.isMaster) &#123;</span><br><span class="line">  <span class="comment">// 逐步增加</span></span><br><span class="line">  cluster.fork();</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> app = express();  </span><br><span class="line">  app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    crypto.pbkdf2(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="number">100000</span>, <span class="number">512</span>, <span class="string">&#x27;sha512&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      res.send(<span class="string">&#x27;&lt;h1&gt;Hi There!&lt;/h1&gt;&#x27;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;);</span><br><span class="line">  </span><br><span class="line">  app.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;server listening at port 3000&#x27;</span>)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="測試-1-個-Child-Process"><a href="#測試-1-個-Child-Process" class="headerlink" title="測試 1 個 Child Process"></a>測試 1 個 Child Process</h3><p>測試指令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ab -c -1 -n -1 localhost:3000/</span><br></pre></td></tr></table></figure>
+<p>測試結果<br><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/CC9841BE-C8B3-4A18-9DDF-0A7BCD621497_2/Image.png" alt="Image.png"></p>
+<h3 id="測試-2-個-Child-Process"><a href="#測試-2-個-Child-Process" class="headerlink" title="測試 2 個 Child Process"></a>測試 2 個 Child Process</h3><p>測試指令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ab -c -2 -n -2 localhost:3000/</span><br></pre></td></tr></table></figure>
+
+<p>測試結果</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/8AC22B99-46B1-492C-AD9E-913F10D78FD4_2/Image.png" alt="Image.png"></p>
+<h3 id="測試-10-個-Child-Process"><a href="#測試-10-個-Child-Process" class="headerlink" title="測試 10 個 Child Process"></a>測試 10 個 Child Process</h3><p>測試指令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ab -c -10 -n -10 localhost:3000/</span><br></pre></td></tr></table></figure>
+
+<p>測試結果</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/973AF440-57E9-4F07-95B6-BA2188B92E73_2/Image.png" alt="Image.png"></p>
+<h3 id="測試-2-個-Child-Process-同時處理-10-個-Request"><a href="#測試-2-個-Child-Process-同時處理-10-個-Request" class="headerlink" title="測試 2 個 Child Process 同時處理 10 個 Request"></a>測試 2 個 Child Process 同時處理 10 個 Request</h3><p>測試指令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ab -c -10 -n -10 localhost:3000/</span><br></pre></td></tr></table></figure>
+
+<p>測試結果</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/AE2EE513-A3F9-4B74-894F-DCCE334260F2_2/Image.png" alt="Image.png"></p>
+<p>我們可以看到，新增一個 Child Process，確實是讓 2 個請求維持在同一時間返回，但是新增到10 個 Child Process 時，面對同時 10 個請求速度卻下降了，然會後最驚人的事，只開兩個 Child Process 卻比開 10 個的快？？？</p>
+<p>Stack Overflow 也有人提出相似問題: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/53442671/node-js-clustering-is-slower-than-single-threaded-mode">Node.js clustering is slower than single threaded mode</a>， 但看起也有沒有結論</p>
+<h2 id="PM2"><a href="#PM2" class="headerlink" title="PM2"></a>PM2</h2><p>相較與直接用 cluster 模組，在管理 process 方面，社群大多數人會使用 <a target="_blank" rel="noopener" href="https://github.com/Unitech/pm2">pm2</a> 開源專案，pm2 除了管裡 process 以外還有許多實用的功能，可以參考 Ray Leel 大的 <a target="_blank" rel="noopener" href="https://medium.com/learn-or-die/%E5%A5%BD-pm2-%E4%B8%8D%E7%94%A8%E5%97%8E-fc7434cc8821">好 pm2, 不用嗎？</a></p>
+<h3 id="安裝"><a href="#安裝" class="headerlink" title="安裝:"></a>安裝:</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm i -g pm2</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用方法："><a href="#使用方法：" class="headerlink" title="使用方法："></a>使用方法：</h3><p><strong>開啟 instance:</strong></p>
+<p><code>-i</code> 後面接希望啟動 instance 的數量， 0 或 max 默認自動偵測 CPU 啟動最大值</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm2 start app.js -i 0</span><br></pre></td></tr></table></figure>
+
+<p><strong>顯示管理程序狀態:</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm2 [list|ls|status]</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/271CE87B-1C32-4E06-9898-D5FB7B6EF6F9_2/Image.png" alt="Image.png"></p>
+<p><strong>停止服務：</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm2 stop app_name</span><br></pre></td></tr></table></figure>
+
+<p><strong>停止並刪除服務:</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pm2 delete app_name</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>Reference:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://ithelp.ithome.com.tw/articles/10232695">【我可以你也可以的Node.js】第二十篇 - Node Cluster 讓你的 Thread 不再孤軍奮戰</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/node-js/" rel="tag"># node.js</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/18/%E4%BD%A0%E7%9C%9F%E6%87%82-Node-js-%E8%A3%A1-Libuv-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Thread-Pool%E5%97%8E%EF%BC%9F/" rel="prev" title="你真的懂 Node.js 裡 Libuv 如何使用 Thread Pool 嗎？">
+      <i class="fa fa-chevron-left"></i> 你真的懂 Node.js 裡 Libuv 如何使用 Thread Pool 嗎？
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E4%BB%80%E9%BA%BC%E6%A8%A3%E7%9A%84%E6%83%85%E6%B3%81%E4%B8%8B%E9%9C%80%E8%A6%81%E6%95%88%E8%83%BD%E6%8F%90%E5%8D%87%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">在什麼樣的情況下需要效能提升？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-Node-js-%E2%80%9CCluster%E2%80%9D-Mode-%E5%A4%9A%E9%96%8B%E5%B9%BE%E5%80%8B-process-%E4%BE%86%E5%B9%AB%E5%BF%99%E5%90%A7%EF%BC%81"><span class="nav-number">2.</span> <span class="nav-text">利用 Node.js “Cluster” Mode 多開幾個 process 來幫忙吧！</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster-%E5%A6%82%E4%BD%95%E9%81%8B%E4%BD%9C%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">Cluster 如何運作？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A0%90%E8%A8%AD%E9%85%8D%E7%99%BC%E6%96%B9%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">預設配發方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-Cluster"><span class="nav-number">5.</span> <span class="nav-text">使用 Cluster</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A2%E7%84%B6%E9%96%8B-Process-%E5%B0%B1%E5%8F%AF%E4%BB%A5%E8%AE%8A%E5%BF%AB%EF%BC%8C%E9%82%A3%E9%96%8B%E5%A5%BD%E9%96%8B%E6%BB%BF%E4%B8%8D%E5%B0%B1%E8%B6%85%E5%BF%AB"><span class="nav-number">6.</span> <span class="nav-text">既然開 Process 就可以變快，那開好開滿不就超快?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%AC%E8%A9%A6-1-%E5%80%8B-Child-Process"><span class="nav-number">6.1.</span> <span class="nav-text">測試 1 個 Child Process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%AC%E8%A9%A6-2-%E5%80%8B-Child-Process"><span class="nav-number">6.2.</span> <span class="nav-text">測試 2 個 Child Process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%AC%E8%A9%A6-10-%E5%80%8B-Child-Process"><span class="nav-number">6.3.</span> <span class="nav-text">測試 10 個 Child Process</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%AC%E8%A9%A6-2-%E5%80%8B-Child-Process-%E5%90%8C%E6%99%82%E8%99%95%E7%90%86-10-%E5%80%8B-Request"><span class="nav-number">6.4.</span> <span class="nav-text">測試 2 個 Child Process 同時處理 10 個 Request</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PM2"><span class="nav-number">7.</span> <span class="nav-text">PM2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%9D"><span class="nav-number">7.1.</span> <span class="nav-text">安裝:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%9A"><span class="nav-number">7.2.</span> <span class="nav-text">使用方法：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Brian Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BrianCodeItUp" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BrianCodeItUp" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/wl00387719@gmail.com" title="E-Mail → wl00387719@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Brian Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

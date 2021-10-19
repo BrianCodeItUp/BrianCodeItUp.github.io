@@ -172,6 +172,74 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/10/20/Node-js-%E6%95%88%E8%83%BD%E6%8F%90%E5%8D%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Brian Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/20/Node-js-%E6%95%88%E8%83%BD%E6%8F%90%E5%8D%87/" class="post-title-link" itemprop="url">Node.js 效能提升</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-20 00:33:58 / Modified: 00:49:53" itemprop="dateCreated datePublished" datetime="2021-10-20T00:33:58+08:00">2021-10-20</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="在什麼樣的情況下需要效能提升？"><a href="#在什麼樣的情況下需要效能提升？" class="headerlink" title="在什麼樣的情況下需要效能提升？"></a>在什麼樣的情況下需要效能提升？</h2><p>如果我們的程式需要進行重度的計算，而且這個任務無法像 timer, http request 等，可以非同步運行時，我們的 Request 就會被卡住</p>
+<p>ex:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doWork</span>(<span class="params">duration</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line">  <span class="keyword">while</span>(<span class="built_in">Date</span>.now() - start &lt; duration) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  doWork(<span class="number">5000</span>)</span><br><span class="line">  res.send(<span class="string">&#x27;&lt;h1&gt;Hi There!&lt;/h1&gt;&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123;&#125;);</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/20/Node-js-%E6%95%88%E8%83%BD%E6%8F%90%E5%8D%87/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/10/18/%E4%BD%A0%E7%9C%9F%E6%87%82-Node-js-%E8%A3%A1-Libuv-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Thread-Pool%E5%97%8E%EF%BC%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -842,82 +910,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/07/26/Linux-Command-%E5%85%A5%E9%96%80-%E4%BA%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Brian Chen">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/26/Linux-Command-%E5%85%A5%E9%96%80-%E4%BA%8C/" class="post-title-link" itemprop="url">Linux Command 入門 (二)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2021-07-26 11:23:59 / Modified: 11:44:02" itemprop="dateCreated datePublished" datetime="2021-07-26T11:23:59+08:00">2021-07-26</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>了解 Command 的輸入與輸出方式，如何傳遞 Command 的結果給下個 Command，可以讓你真正感受到 Shell 的強大，廢話不多說就馬上開始吧！</p>
-<h2 id="Command-的-Input-和-Output"><a href="#Command-的-Input-和-Output" class="headerlink" title="Command 的 Input 和 Output"></a>Command 的 Input 和 Output</h2><p>給 Command輸入的資料可以是 Standard Input 或者是參數, Command 執行完的結果是 Standard Output 或是Standard Error，Standard Output 和 Error 預設的輸出位置是 Terminal</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/26/Linux-Command-%E5%85%A5%E9%96%80-%E4%BA%8C/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -986,7 +978,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
