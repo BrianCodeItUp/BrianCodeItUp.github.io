@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/FACE7B00-322E-491E-865C-DAD79E879C49_2/Image.png">
 <meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/3C6AA675-0994-4522-BA61-6F8654CD40B7_2/Image.png">
 <meta property="article:published_time" content="2021-10-17T17:01:10.000Z">
-<meta property="article:modified_time" content="2021-10-17T17:09:09.642Z">
+<meta property="article:modified_time" content="2021-10-20T09:06:32.778Z">
 <meta property="article:author" content="Brian Chen">
 <meta property="article:tag" content="node.js">
 <meta name="twitter:card" content="summary">
@@ -203,10 +203,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-10-18 01:01:10 / Modified: 01:09:09" itemprop="dateCreated datePublished" datetime="2021-10-18T01:01:10+08:00">2021-10-18</time>
+              <time title="Created: 2021-10-18 01:01:10" itemprop="dateCreated datePublished" datetime="2021-10-18T01:01:10+08:00">2021-10-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-10-20 17:06:32" itemprop="dateModified" datetime="2021-10-20T17:06:32+08:00">2021-10-20</time>
+              </span>
 
           
 
@@ -227,7 +233,7 @@
 <li>執行結果</li>
 </ul>
 <p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/934B6CC0-FF9A-4E60-85CC-570448CA420E_2/Image.png" alt="image"></p>
-<h2 id="為什麼會有此結果？"><a href="#為什麼會有此結果？" class="headerlink" title="為什麼會有此結果？"></a>為什麼會有此結果？</h2><p>第一個點我需要了解到 node 底層使用了 Libuv 處理案讀寫和計算 hash 等功能，Libuv 用了Thread Pool 中的 Thread 來處理這些任務，Thread Pool 預設的 Thread 數量為 4 個，換句話說只有 4 個 Libuv 負責的任務可以同時進行，然後 https 請求不是由 Libuv 負責，而是 OS 負責，OS 會決定是否開一條新的 Thread 來處理此任務，因此我們就看到了 HTTPS 請求最快完成，但是問題來了，為什麼 fs module 檔案讀了這麼久？</p>
+<h2 id="為什麼會有此結果？"><a href="#為什麼會有此結果？" class="headerlink" title="為什麼會有此結果？"></a>為什麼會有此結果？</h2><p>第一個點我需要了解到 node 底層使用了 Libuv 處理檔案讀寫和計算 hash 等功能，Libuv 用了Thread Pool 中的 Thread 來處理這些任務，Thread Pool 預設的 Thread 數量為 4 個，換句話說只有 4 個 Libuv 負責的任務可以同時進行，然後 https 請求不是由 Libuv 負責，而是 OS 負責，OS 會決定是否開一條新的 Thread 來處理此任務，因此我們就看到了 HTTPS 請求最快完成，但是問題來了，為什麼 fs module 檔案讀了這麼久？</p>
 <p>那我們需要先了解讀檔案的流程</p>
 <p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/B3BFDF36-97B9-4BF6-9CBF-0561BA0CD779/3DACB1F3-7AA2-472E-B2C1-A58FA3CDD2CF_2/Image.png" alt="image"></p>
 <p>上圖我們可以看到， node 沒有直接發 request 去讀檔案，而是在第二步時，先取得該檔案的狀態資訊，才後才在第四步發 request 去讀檔案</p>
