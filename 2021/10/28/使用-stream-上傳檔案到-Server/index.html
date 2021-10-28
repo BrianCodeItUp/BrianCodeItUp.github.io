@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Ovo&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"briancodeitup.blog","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="有時候檔案太大，沒有辦法一次整個上傳，比如說影片、圖片等，這時候我們就需要將檔案拆成一小塊一小塊的 bytes 上傳 實作流程：  使用者上傳檔案 用 FileReader 讀取檔案內容 將檔案拆成一小塊一小塊後上傳 後端收到每一小塊資料後 append 到該檔案裡">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 stream 上傳檔案到 Server">
+<meta property="og:url" content="https://briancodeitup.blog/2021/10/28/%E4%BD%BF%E7%94%A8-stream-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Server/index.html">
+<meta property="og:site_name" content="Brian&#39;s Blog">
+<meta property="og:description" content="有時候檔案太大，沒有辦法一次整個上傳，比如說影片、圖片等，這時候我們就需要將檔案拆成一小塊一小塊的 bytes 上傳 實作流程：  使用者上傳檔案 用 FileReader 讀取檔案內容 將檔案拆成一小塊一小塊後上傳 後端收到每一小塊資料後 append 到該檔案裡">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/9BC54457-9E54-40E7-A33C-65BC59B9F6DD/B42E401D-79C8-4F61-9B20-FE1921D8FBF7_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/9BC54457-9E54-40E7-A33C-65BC59B9F6DD/711D2B65-891C-4CB7-A378-FAE6A1C088E0_2/AnimatedImage.gif">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/9BC54457-9E54-40E7-A33C-65BC59B9F6DD/7B608B72-F919-4D5C-A196-4E08A82B10F1_2/Image.png">
+<meta property="article:published_time" content="2021-10-28T09:28:05.000Z">
+<meta property="article:modified_time" content="2021-10-28T09:37:27.674Z">
+<meta property="article:author" content="Brian Chen">
+<meta property="article:tag" content="node.js">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/9BC54457-9E54-40E7-A33C-65BC59B9F6DD/B42E401D-79C8-4F61-9B20-FE1921D8FBF7_2/Image.png">
+
+<link rel="canonical" href="https://briancodeitup.blog/2021/10/28/%E4%BD%BF%E7%94%A8-stream-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Server/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>使用 stream 上傳檔案到 Server | Brian's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Brian's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">I'm Brian Chen. I'm a frontend developer on the way to be a backend developer</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-article-list">
+
+    <a href="/archives/" rel="section"><i class="fa fa-list fa-fw"></i>Article List</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/10/28/%E4%BD%BF%E7%94%A8-stream-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Brian Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 stream 上傳檔案到 Server
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-28 17:28:05 / Modified: 17:37:27" itemprop="dateCreated datePublished" datetime="2021-10-28T17:28:05+08:00">2021-10-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>有時候檔案太大，沒有辦法一次整個上傳，比如說影片、圖片等，這時候我們就需要將檔案拆成一小塊一小塊的 bytes 上傳</p>
+<p>實作流程：</p>
+<ul>
+<li>使用者上傳檔案</li>
+<li>用 <code>FileReader</code> 讀取檔案內容</li>
+<li>將檔案拆成一小塊一小塊後上傳</li>
+<li>後端收到每一小塊資料後 append 到該檔案裡<span id="more"></span></li>
+</ul>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/9BC54457-9E54-40E7-A33C-65BC59B9F6DD/B42E401D-79C8-4F61-9B20-FE1921D8FBF7_2/Image.png" alt="Image.png"></p>
+<p>前端的畫面，使用者先點選“選擇檔案”上傳檔案後，在點擊右邊的 “讀取＆上傳”將檔案上傳到 Server</p>
+<h2 id="Client-部分"><a href="#Client-部分" class="headerlink" title="Client 部分"></a>Client 部分</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>My file uploader<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  File: <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;file&quot;</span> <span class="attr">id</span>=<span class="string">&#x27;f&#x27;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">&quot;btnUpload&quot;</span>&gt;</span>Read &amp; Upload<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;divOutput&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> btnUpload = <span class="built_in">document</span>.getElementById(<span class="string">&quot;btnUpload&quot;</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> divOutput = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;divOutput&#x27;</span>)</span></span><br><span class="line"><span class="javascript">    <span class="keyword">const</span> f = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;f&#x27;</span>)</span></span><br><span class="line"><span class="javascript"></span></span><br><span class="line"><span class="javascript">    btnUpload.addEventListener(<span class="string">&quot;click&quot;</span>, <span class="function">() =&gt;</span> &#123;</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> theFile = f.files[<span class="number">0</span>];</span></span><br><span class="line"><span class="javascript">      <span class="keyword">const</span> fileReader = <span class="keyword">new</span> FileReader()</span></span><br><span class="line"><span class="javascript">      fileReader.onload = <span class="keyword">async</span> (e) =&gt; &#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> CHUNK_SIZE = <span class="number">100000</span> <span class="comment">// 100 kb</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> chunkCount = <span class="built_in">Math</span>.ceil(e.target.result.byteLength/CHUNK_SIZE)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">const</span> fileName = <span class="built_in">encodeURIComponent</span>(<span class="built_in">Math</span>.random() * <span class="number">1000</span> + theFile.name)</span></span><br><span class="line"><span class="javascript">        <span class="keyword">for</span> (<span class="keyword">let</span> chunkId = <span class="number">0</span>; chunkId &lt; chunkCount + <span class="number">1</span>; chunkId++) &#123;</span></span><br><span class="line"><span class="javascript">          <span class="keyword">const</span> chunk = e.target.result.slice(</span></span><br><span class="line"><span class="javascript">            chunkId * CHUNK_SIZE,</span></span><br><span class="line"><span class="javascript">            chunkId * CHUNK_SIZE + CHUNK_SIZE</span></span><br><span class="line"><span class="javascript">          )</span></span><br><span class="line"><span class="javascript">          <span class="keyword">await</span> fetch (<span class="string">&quot;http://localhost:8080/upload&quot;</span>, &#123;</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;method&quot;</span>: <span class="string">&quot;POST&quot;</span>,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;headers&quot;</span>: &#123;</span></span><br><span class="line"><span class="javascript">                  <span class="string">&quot;content-type&quot;</span>: <span class="string">&quot;application/octet-stream&quot;</span>,</span></span><br><span class="line"><span class="javascript">                  <span class="string">&quot;content-length&quot;</span>: chunk.length,</span></span><br><span class="line"><span class="javascript">                  <span class="string">&quot;file-name&quot;</span>: fileName</span></span><br><span class="line"><span class="javascript">              &#125;,</span></span><br><span class="line"><span class="javascript">              <span class="string">&quot;body&quot;</span>: chunk</span></span><br><span class="line"><span class="javascript">          &#125;)</span></span><br><span class="line"><span class="javascript">          <span class="keyword">const</span> completePercentage = <span class="built_in">Math</span>.floor(chunkId * <span class="number">100</span> / chunkCount)</span></span><br><span class="line"><span class="javascript">          divOutput.textContent = <span class="string">`<span class="subst">$&#123;completePercentage&#125;</span> %`</span></span></span><br><span class="line"><span class="javascript">        &#125;</span></span><br><span class="line"><span class="javascript">      &#125;</span></span><br><span class="line"><span class="javascript">      fileReader.readAsArrayBuffer(theFile)</span></span><br><span class="line"><span class="javascript">      </span></span><br><span class="line"><span class="javascript">    &#125;)</span></span><br><span class="line"><span class="javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><small>html 的結構</small></p>
+<p>我們使用 FileReader 讀取使用者上傳的檔案，FileReader 讀到的資料存為 ArrayBuffer，基本上就是 bytes array, 然後我們用 slice 將這些 bytes 拆分為一塊一塊的 chunk (瀏覽有限制每個 Request 最高 <strong>100,000 bytes</strong>， 就是 100 kb)，依序將每個 Chunk 上傳，我們也可以透過目前已上傳多少 Chunk 來計算上傳進度</p>
+<p>Header 的 <code>content-type</code> 需要為 <code>application/octet-stream</code> 因為我們要上傳二進制的資料</p>
+<p>注意：檔案名稱需要與 encodeUROComponent 轉為 Base64, 到後端再 decode 回來，因為傳送中文檔名會發生錯誤: <a target="_blank" rel="noopener" href="https://github.com/george-es/Blog/issues/73">Request请求：Failed to execute ‘setRequestHeader’ on ‘XMLHttpRequest’: String contains non ISO-8859-1 code point.</a></p>
+<h2 id="Server-部分"><a href="#Server-部分" class="headerlink" title="Server 部分"></a>Server 部分</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> httpServer = http.createServer()</span><br><span class="line"></span><br><span class="line">httpServer.on(<span class="string">&quot;listening&quot;</span>, <span class="function">() =&gt;</span> <span class="string">&quot;Listening&quot;</span>)</span><br><span class="line">httpServer.on(<span class="string">&quot;request&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (req.url === <span class="string">&#x27;/&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> file = fs.readFileSync(<span class="string">&#x27;./index.html&#x27;</span>)</span><br><span class="line">    res.end(file)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125; </span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (req.url === <span class="string">&#x27;/upload&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> fileName = <span class="built_in">decodeURIComponent</span>(req.headers[<span class="string">&quot;file-name&quot;</span>])</span><br><span class="line">    req.on(<span class="string">&quot;data&quot;</span>, <span class="function">(<span class="params">chunk</span>) =&gt;</span> &#123;</span><br><span class="line">      fs.appendFileSync(fileName, chunk)</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`received chunk! <span class="subst">$&#123;chunk.length&#125;</span>`</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    res.end(<span class="string">&quot;uploaded&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">httpServer.listen(<span class="number">8080</span>)</span><br></pre></td></tr></table></figure>
+
+
+<p>Server 拿到資料後 append 到該檔案即可</p>
+<h2 id="測試"><a href="#測試" class="headerlink" title="測試"></a>測試</h2><p>上傳進度顯示正確</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/9BC54457-9E54-40E7-A33C-65BC59B9F6DD/711D2B65-891C-4CB7-A378-FAE6A1C088E0_2/AnimatedImage.gif" alt="AnimatedImage.gif"></p>
+<p>我們的資料夾也確實收到檔案</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/9BC54457-9E54-40E7-A33C-65BC59B9F6DD/7B608B72-F919-4D5C-A196-4E08A82B10F1_2/Image.png" alt="Image.png"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/node-js/" rel="tag"># node.js</a>
+              <a href="/tags/javascript/" rel="tag"># javascript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/20/Node-js-%E6%95%88%E8%83%BD%E6%8F%90%E5%8D%87/" rel="prev" title="Node.js 效能提升">
+      <i class="fa fa-chevron-left"></i> Node.js 效能提升
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Client-%E9%83%A8%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">Client 部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-%E9%83%A8%E5%88%86"><span class="nav-number">2.</span> <span class="nav-text">Server 部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B8%AC%E8%A9%A6"><span class="nav-number">3.</span> <span class="nav-text">測試</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Brian Chen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BrianCodeItUp" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BrianCodeItUp" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/wl00387719@gmail.com" title="E-Mail → wl00387719@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Brian Chen</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

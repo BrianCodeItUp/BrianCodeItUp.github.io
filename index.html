@@ -167,6 +167,78 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/10/28/%E4%BD%BF%E7%94%A8-stream-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Brian Chen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/10/28/%E4%BD%BF%E7%94%A8-stream-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Server/" class="post-title-link" itemprop="url">使用 stream 上傳檔案到 Server</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-10-28 17:28:05 / Modified: 17:37:27" itemprop="dateCreated datePublished" datetime="2021-10-28T17:28:05+08:00">2021-10-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>有時候檔案太大，沒有辦法一次整個上傳，比如說影片、圖片等，這時候我們就需要將檔案拆成一小塊一小塊的 bytes 上傳</p>
+<p>實作流程：</p>
+<ul>
+<li>使用者上傳檔案</li>
+<li>用 <code>FileReader</code> 讀取檔案內容</li>
+<li>將檔案拆成一小塊一小塊後上傳</li>
+<li>後端收到每一小塊資料後 append 到該檔案裡
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/10/28/%E4%BD%BF%E7%94%A8-stream-%E4%B8%8A%E5%82%B3%E6%AA%94%E6%A1%88%E5%88%B0-Server/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/10/20/Node-js-%E6%95%88%E8%83%BD%E6%8F%90%E5%8D%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -830,87 +902,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/07/27/Understand-Linux-Permissions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Brian Chen">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/07/27/Understand-Linux-Permissions/" class="post-title-link" itemprop="url">Linux | Understand Permissions</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-07-27 10:29:50" itemprop="dateCreated datePublished" datetime="2021-07-27T10:29:50+08:00">2021-07-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-28 09:47:35" itemprop="dateModified" datetime="2021-07-28T09:47:35+08:00">2021-07-28</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Unix or Unux-like system like mac or linux allow multiple users in a single machine.<br>As regular users, we don’t have permission to write or even read every file on the machine.<br>For example, if i try to read the file <strong>/etc/sudoers</strong> using <code>cat</code> . I get a “permission denied” message.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/07/27/Understand-Linux-Permissions/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -979,7 +970,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -990,7 +981,7 @@
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
