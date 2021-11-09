@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/07C5DD7A-0B31-4873-B737-CA2111C67C45/2E152BCE-4395-48D1-A816-4AA6C4174C4E_2/Asymmetric-encryption-primitive.jpeg">
 <meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/07C5DD7A-0B31-4873-B737-CA2111C67C45/A1A62971-5465-4DFB-88A5-C82246E268FB_2/Image.png">
 <meta property="article:published_time" content="2021-11-09T15:02:05.000Z">
-<meta property="article:modified_time" content="2021-11-09T15:18:22.654Z">
+<meta property="article:modified_time" content="2021-11-09T15:26:21.293Z">
 <meta property="article:author" content="Brian Chen">
 <meta property="article:tag" content="Computer Networking">
 <meta name="twitter:card" content="summary">
@@ -193,7 +193,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-11-09 23:02:05 / Modified: 23:18:22" itemprop="dateCreated datePublished" datetime="2021-11-09T23:02:05+08:00">2021-11-09</time>
+              <time title="Created: 2021-11-09 23:02:05 / Modified: 23:26:21" itemprop="dateCreated datePublished" datetime="2021-11-09T23:02:05+08:00">2021-11-09</time>
             </span>
 
           
@@ -240,9 +240,9 @@
 </blockquote>
 <p>假設 Alice 想要安全的與 Bob 通信</p>
 <ol>
-<li>Bob 先生成公、鑰</li>
+<li>Bob 先生成公、私鑰</li>
 <li>Bob 將公鑰給 Alice</li>
-<li>Alice 生成一把對稱加密的鑰匙，叫做對談金鑰 Session Key</li>
+<li>Alice 生成一把對稱加密的鑰匙，叫做對談金鑰 (Session Key) </li>
 <li>Alice 用對談金鑰加密要傳送的內容 (使用對稱加密)</li>
 <li>Alice 用 Bob 給的公鑰加密對談金鑰 (使用非對稱加密）</li>
 <li>Alice 將 4,5 步的加密結果，一起傳給 Bob</li>
@@ -258,7 +258,7 @@
 <li>中間人拿到加密的對話鑰匙</li>
 <li>中間人用假私鑰解開對話金鑰，成功拿到了我們的對話金鑰</li>
 </ol>
-<p>中間這時因為手上也有 google.com 一開始傳的公鑰，所以他也可以依照正常的混合加密方式，將自己的對話金鑰傳給 google.com，所以這樣一來這個中間人就同時有了我們對話金鑰和 google 對話金鑰，能夠在我們與 google.com 通信時，假裝是 google.com 回傳我們假資料或者假扮我們傳給 google.com 假資料，這就是一種 “中間人攻擊“。<br>因此我們需要找一種方式去證明一開始 google 傳的公鑰就是 google 的，答案就是透過一個客戶端和服務端都相信的第三方，叫做憑證頒發機構(<em>certificate</em> authority 簡稱 CA)，簽發憑證給服務端</p>
+<p>中間人這時因為手上也有 google.com 一開始傳的公鑰，所以他也可以依照正常的混合加密方式，將自己的對話金鑰傳給 google.com，所以這樣一來這個中間人就同時有了我們對話金鑰和 google 對話金鑰，能夠在我們與 google.com 通信時，假裝是 google.com 回傳我們假資料或者假扮我們傳給 google.com 假資料，這就是一種 “中間人攻擊“。<br>因此我們需要找一種方式去證明一開始 google 傳的公鑰就是 google 的，答案就是透過一個客戶端和服務端都相信的第三方，叫做憑證頒發機構(<em>certificate</em> authority 簡稱 CA)，簽發憑證給服務端</p>
 <h3 id="那怎麼簽發證書呢？"><a href="#那怎麼簽發證書呢？" class="headerlink" title="那怎麼簽發證書呢？"></a><strong>那怎麼簽發證書呢？</strong></h3><p>服務器將自己的公鑰給 CA，CA 會用自己的私鑰加密這把公鑰稱為數位簽名 (Digital Signature)，然後連同原本的公鑰包在一起，稱為 CA 證書</p>
 <h3 id="那客戶端怎麼驗證-CA-證書"><a href="#那客戶端怎麼驗證-CA-證書" class="headerlink" title="那客戶端怎麼驗證 CA 證書?"></a>那客戶端怎麼驗證 CA 證書?</h3><p>客戶端要與服務器通信時，先把 CA 證書回給客戶端，客戶端看證書上是某 CA 簽發的，就拿該 CA 的公鑰去解數字簽名，然後解出的值與證書上的公鑰相同，就代表公鑰確實是服務端的</p>
 <hr>
