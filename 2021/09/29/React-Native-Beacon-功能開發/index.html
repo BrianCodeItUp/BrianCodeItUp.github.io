@@ -1,220 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="has-navbar-fixed-top">
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <meta charset="utf-8">
+<title>React Native Beacon 功能開發 - Brian&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
 
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ovo&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"briancodeitup.blog","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
 
-  <meta name="description" content="什麼是低功耗藍芽低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:  Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置 Central Device(中心裝置): 一般是智慧型手機，一般為訊號的接收方">
+<meta name="description" content="">
+
+
+
+<meta name="keywords" content="Frontend,Backend,Linux,Python,React,react,react native,Java">
+
+
+
+    <meta name="description" content="什麼是低功耗藍芽低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:  Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置 Central Device(中心裝置): 一般是智慧型手機，一般為訊號的接收方">
 <meta property="og:type" content="article">
 <meta property="og:title" content="React Native Beacon 功能開發">
 <meta property="og:url" content="https://briancodeitup.blog/2021/09/29/React-Native-Beacon-%E5%8A%9F%E8%83%BD%E9%96%8B%E7%99%BC/index.html">
 <meta property="og:site_name" content="Brian&#39;s Blog">
 <meta property="og:description" content="什麼是低功耗藍芽低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:  Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置 Central Device(中心裝置): 一般是智慧型手機，一般為訊號的接收方">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/7437B4E1-64D7-4922-8B81-569C216F683E_1">
 <meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/44ED414D-2431-4F69-A174-CECEE6B458BC_1">
 <meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/9FCD9237-AAD1-49E8-B90B-E12961ABC9FD_1">
 <meta property="og:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/730A1806-51EA-4887-94B3-6DC386BDB8D7_1">
 <meta property="article:published_time" content="2021-09-29T02:26:25.000Z">
-<meta property="article:modified_time" content="2021-10-06T06:58:17.505Z">
+<meta property="article:modified_time" content="2021-11-09T16:16:35.805Z">
 <meta property="article:author" content="Brian Chen">
 <meta property="article:tag" content="react-native">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://res.craft.do/user/preview/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/002570EB-B204-4FB7-ADC8-4AA0228599B0/7437B4E1-64D7-4922-8B81-569C216F683E_1">
 
-<link rel="canonical" href="https://briancodeitup.blog/2021/09/29/React-Native-Beacon-%E5%8A%9F%E8%83%BD%E9%96%8B%E7%99%BC/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
-  };
-</script>
-
-  <title>React Native Beacon 功能開發 | Brian's Blog</title>
-  
 
 
 
 
+<link rel="icon" href="/images/blog-icon.svg">
 
 
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
 
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
 
-</head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Brian
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/BrianCodeItUp">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
     </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Brian's Blog</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-      <p class="site-subtitle" itemprop="description">I'm Brian Chen. I'm a frontend developer on the way to be a backend developer</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-article-list">
-
-    <a href="/archives/" rel="section"><i class="fa fa-list fa-fw"></i>Article List</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
-  </ul>
 </nav>
 
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            React Native Beacon 功能開發
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
             
-
+                <span>9月 29 2021</span>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/09/29/React-Native-Beacon-%E5%8A%9F%E8%83%BD%E9%96%8B%E7%99%BC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Brian Chen">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          React Native Beacon 功能開發
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-09-29 10:26:25" itemprop="dateCreated datePublished" datetime="2021-09-29T10:26:25+08:00">2021-09-29</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-06 14:58:17" itemprop="dateModified" datetime="2021-10-06T14:58:17+08:00">2021-10-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h2 id="什麼是低功耗藍芽"><a href="#什麼是低功耗藍芽" class="headerlink" title="什麼是低功耗藍芽"></a>什麼是低功耗藍芽</h2><p>低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:</p>
+        <html><head></head><body><h2 id="什麼是低功耗藍芽"><a href="#什麼是低功耗藍芽" class="headerlink" title="什麼是低功耗藍芽"></a>什麼是低功耗藍芽</h2><p>低功耗藍芽是藍芽 4.0 後因應物聯網(IOT)趨勢所發展出的藍芽技術，技術特點是使用很低的能源消耗點對點的傳輸少量的資料，一般用在運動追蹤裝置、智能手錶、健康追蹤、家庭自動化…等等，低功耗藍芽一般分為兩種裝置:</p>
 <ol>
 <li>Peripheral Device(外圍裝置): 一般為智慧型穿戴裝置</li>
 <li>Central Device(中心裝置): 一般是智慧型手機，一般為訊號的接收方</li>
@@ -249,10 +167,10 @@
 <h2 id="Android-是否也支援-iBeacon"><a href="#Android-是否也支援-iBeacon" class="headerlink" title="Android 是否也支援 iBeacon"></a>Android 是否也支援 iBeacon</h2><p>是的，iBeacon 只是一種 BLE 廣播的資料格式，Android 可以偵測此格式的資料後，讓 App 做對應處理，目前已有 <a target="_blank" rel="noopener" href="https://github.com/AltBeacon/android-beacon-library">Android Library</a> 讓 Android 可以像 iOS 一樣進行 Ranging 和 Monitoring</p>
 <p>Android 需要地點權限來偵測 beacon, 若未開啟會掃不到</p>
 <p>新增以下 permission 在 <code>AndroidManifest.xml</code></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//  old version of Android</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.ACCESS_COARSE_LOCATION&quot; /&gt;</span><br><span class="line">// SDK 29+</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.ACCESS_FINE_LOCATION&quot; /&gt;</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.ACCESS_BACKGROUND_LOCATION&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml hljs"><table><tbody><tr><td class="code"><pre><span class="line">//  old version of Android</span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">uses-permission</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">"android.permission.ACCESS_COARSE_LOCATION"</span> /&gt;</span></span><br><span class="line">// SDK 29+</span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">uses-permission</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">"android.permission.ACCESS_FINE_LOCATION"</span> /&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">uses-permission</span> <span class="hljs-attr">android:name</span>=<span class="hljs-string">"android.permission.ACCESS_BACKGROUND_LOCATION"</span> /&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="React-Native-相關的套件"><a href="#React-Native-相關的套件" class="headerlink" title="React-Native 相關的套件"></a>React-Native 相關的套件</h2><p><a target="_blank" rel="noopener" href="https://github.com/MacKentoch/react-native-beacons-manager">react-native-beacons-manager</a> 是維護年份相對較近的套件，但目前已經 3 年左右沒有再發布新版本，目前是使用 github 上最新的 git commit 點來做安裝</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;devDependencies&quot;: &#123;</span><br><span class="line">    &quot;react-native-beacons-manager&quot;: &quot;git://github.com/MacKentoch/react-native-beacons-manager.git#d118c87&quot;,</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="code"><pre><span class="line">"devDependencies": {</span><br><span class="line">    "react-native-beacons-manager": "git://github.com/MacKentoch/react-native-beacons-manager.git#d118c87",</span><br><span class="line">  },</span><br></pre></td></tr></tbody></table></figure>
 
 <p>目前實測當 App 在前景時 Ranging 和 Monitoring 都能夠正常運作</p>
 <h2 id="參考文件與影片"><a href="#參考文件與影片" class="headerlink" title="參考文件與影片"></a>參考文件與影片</h2><h3 id="藍芽"><a href="#藍芽" class="headerlink" title="藍芽"></a>藍芽</h3><ul>
@@ -285,207 +203,130 @@
 </ul>
 <p>可以，但是需要經由廠商提供的 App 或 SDK </p>
 <p>Question reference: <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/27917630/changing-the-uuid-major-and-minor-values-of-an-ibeacon">Stack Overflow</a> , <a target="_blank" rel="noopener" href="https://developer.apple.com/forums/thread/30806">Apple Developer Forums</a></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/react-native/">#react-native</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/10/01/%E5%A6%82%E4%BD%95%E5%9C%A8-React-Native-%E5%B0%88%E6%A1%88%E6%96%B0%E5%A2%9E-iOS-Widgets/">如何在 React Native 專案新增 iOS Widgets</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/07/30/Python-%E6%AA%94%E6%A1%88%E8%AE%80%E5%AF%AB-I-O/">Python 檔案讀寫(File I/O)</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
 
     </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 Brian Chen&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
 
-    
-    
-    
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/react-native/" rel="tag"># react-native</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2021/07/30/Python-%E6%AA%94%E6%A1%88%E8%AE%80%E5%AF%AB-I-O/" rel="prev" title="Python 檔案讀寫(File I/O)">
-      <i class="fa fa-chevron-left"></i> Python 檔案讀寫(File I/O)
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/10/01/%E5%A6%82%E4%BD%95%E5%9C%A8-React-Native-%E5%B0%88%E6%A1%88%E6%96%B0%E5%A2%9E-iOS-Widgets/" rel="next" title="如何在 React Native 專案新增 iOS Widgets">
-      如何在 React Native 專案新增 iOS Widgets <i class="fa fa-chevron-right"></i>
-    </a></div>
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/BrianCodeItUp">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
     </div>
-      </footer>
-    
-  </article>
-  
-  
-  
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
 
-
-
-          </div>
-          
-
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
 <script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
     });
-  }
 </script>
 
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF%E4%BD%8E%E5%8A%9F%E8%80%97%E8%97%8D%E8%8A%BD"><span class="nav-number">1.</span> <span class="nav-text">什麼是低功耗藍芽</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%8E%E5%8A%9F%E8%80%97%E8%97%8D%E7%89%99%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">低功耗藍牙工作原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E9%BA%BC%E6%98%AF-Beacon"><span class="nav-number">2.</span> <span class="nav-text">什麼是 Beacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%9C%E6%96%BC-iBeacon"><span class="nav-number">3.</span> <span class="nav-text">關於 iBeacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android-%E6%98%AF%E5%90%A6%E4%B9%9F%E6%94%AF%E6%8F%B4-iBeacon"><span class="nav-number">4.</span> <span class="nav-text">Android 是否也支援 iBeacon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-Native-%E7%9B%B8%E9%97%9C%E7%9A%84%E5%A5%97%E4%BB%B6"><span class="nav-number">5.</span> <span class="nav-text">React-Native 相關的套件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E6%96%87%E4%BB%B6%E8%88%87%E5%BD%B1%E7%89%87"><span class="nav-number">6.</span> <span class="nav-text">參考文件與影片</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%97%8D%E8%8A%BD"><span class="nav-number">6.1.</span> <span class="nav-text">藍芽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beacon"><span class="nav-number">6.2.</span> <span class="nav-text">Beacon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iBeacon-Apple-Docs"><span class="nav-number">6.3.</span> <span class="nav-text">iBeacon Apple Docs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FAQ"><span class="nav-number">7.</span> <span class="nav-text">FAQ</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Brian Chen</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">14</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">9</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/BrianCodeItUp" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BrianCodeItUp" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="/wl00387719@gmail.com" title="E-Mail → wl00387719@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Brian Chen</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
-  </div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
 
-        
+<script src="/js/insight.js"></script>
 
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
+    
 </body>
 </html>

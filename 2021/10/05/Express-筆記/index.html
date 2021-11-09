@@ -1,241 +1,159 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="has-navbar-fixed-top">
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+    <meta charset="utf-8">
+<title>Express 筆記 - Brian&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
 
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Ovo&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"briancodeitup.blog","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
 
-  <meta name="description" content="Express ConceptExpress is a bunch of middlewares works together Expresss Basic Routingconst express &#x3D; require(&amp;#x27;express&amp;#x27;);const app &#x3D; express();app.get(&amp;#x27;&#x2F;register&amp;#x27;, (req, res) &#x3D;&gt;">
+<meta name="description" content="">
+
+
+
+<meta name="keywords" content="Frontend,Backend,Linux,Python,React,react,react native,Java">
+
+
+
+    <meta name="description" content="Express ConceptExpress is a bunch of middlewares works together Expresss Basic Routingconst express &#x3D; require(&#39;express&#39;);const app &#x3D; express();app.get(&#39;&#x2F;register&#39;, (req, res) &#x3D;&gt; {  const body &#x3D; req">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Express 筆記">
 <meta property="og:url" content="https://briancodeitup.blog/2021/10/05/Express-%E7%AD%86%E8%A8%98/index.html">
 <meta property="og:site_name" content="Brian&#39;s Blog">
-<meta property="og:description" content="Express ConceptExpress is a bunch of middlewares works together Expresss Basic Routingconst express &#x3D; require(&amp;#x27;express&amp;#x27;);const app &#x3D; express();app.get(&amp;#x27;&#x2F;register&amp;#x27;, (req, res) &#x3D;&gt;">
-<meta property="og:locale" content="en_US">
+<meta property="og:description" content="Express ConceptExpress is a bunch of middlewares works together Expresss Basic Routingconst express &#x3D; require(&#39;express&#39;);const app &#x3D; express();app.get(&#39;&#x2F;register&#39;, (req, res) &#x3D;&gt; {  const body &#x3D; req">
+<meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://i.imgur.com/qtUrn4g.png">
 <meta property="article:published_time" content="2021-10-05T07:36:07.000Z">
-<meta property="article:modified_time" content="2021-10-06T06:56:34.542Z">
+<meta property="article:modified_time" content="2021-11-09T16:14:02.038Z">
 <meta property="article:author" content="Brian Chen">
 <meta property="article:tag" content="express">
 <meta property="article:tag" content="node.js">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i.imgur.com/qtUrn4g.png">
 
-<link rel="canonical" href="https://briancodeitup.blog/2021/10/05/Express-%E7%AD%86%E8%A8%98/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
-  };
-</script>
-
-  <title>Express 筆記 | Brian's Blog</title>
-  
 
 
 
 
+<link rel="icon" href="/images/blog-icon.svg">
 
 
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
 
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
 
-</head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Brian
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/BrianCodeItUp">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
     </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Brian's Blog</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-      <p class="site-subtitle" itemprop="description">I'm Brian Chen. I'm a frontend developer on the way to be a backend developer</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-article-list">
-
-    <a href="/archives/" rel="section"><i class="fa fa-list fa-fw"></i>Article List</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
-  </ul>
 </nav>
 
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Express 筆記
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
             
-
+                <span>10月 5 2021</span>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
     
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://briancodeitup.blog/2021/10/05/Express-%E7%AD%86%E8%A8%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Brian Chen">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Express 筆記
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-10-05 15:36:07" itemprop="dateCreated datePublished" datetime="2021-10-05T15:36:07+08:00">2021-10-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-10-06 14:56:34" itemprop="dateModified" datetime="2021-10-06T14:56:34+08:00">2021-10-06</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h2 id="Express-Concept"><a href="#Express-Concept" class="headerlink" title="Express Concept"></a>Express Concept</h2><p>Express is a bunch of middlewares works together</p>
-<h2 id="Expresss-Basic-Routing"><a href="#Expresss-Basic-Routing" class="headerlink" title="Expresss Basic Routing"></a>Expresss Basic Routing</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/register&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> body = req.body;</span><br><span class="line">  <span class="keyword">const</span> isSucceed =  auth(body);</span><br><span class="line">  <span class="keyword">if</span> (isSucceed) &#123;</span><br><span class="line">    res.send(<span class="string">&#x27;Register Successfully&#x27;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.status(<span class="number">443</span>).sene(<span class="string">&#x27;Authentication fail, unable to register&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+        <html><head></head><body><h2 id="Express-Concept"><a href="#Express-Concept" class="headerlink" title="Express Concept"></a>Express Concept</h2><p>Express is a bunch of middlewares works together</p>
+<h2 id="Expresss-Basic-Routing"><a href="#Expresss-Basic-Routing" class="headerlink" title="Expresss Basic Routing"></a>Expresss Basic Routing</h2><figure class="highlight javascript hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">app.get(<span class="hljs-string">'/register'</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> body = req.body;</span><br><span class="line">  <span class="hljs-keyword">const</span> isSucceed =  auth(body);</span><br><span class="line">  <span class="hljs-keyword">if</span> (isSucceed) {</span><br><span class="line">    res.send(<span class="hljs-string">'Register Successfully'</span>);</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    res.status(<span class="hljs-number">443</span>).sene(<span class="hljs-string">'Authentication fail, unable to register'</span>);</span><br><span class="line">  }</span><br><span class="line">});</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 <span id="more"></span>
 
-<h2 id="Apply-Middleware"><a href="#Apply-Middleware" class="headerlink" title="Apply Middleware"></a>Apply Middleware</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validateUser</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">	res.locals.validated = <span class="literal">true</span>;</span><br><span class="line">	next()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Apply the middleware to all method at route &#x27;/&#x27;</span></span><br><span class="line">app.use(<span class="string">&#x27;/&#x27;</span> ,validateUser)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Apply the middleware to &quot;GET&quot; method at route &#x27;/&#x27;</span></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, validateUser)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Apply-Middleware"><a href="#Apply-Middleware" class="headerlink" title="Apply Middleware"></a>Apply Middleware</h2><figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">validateUser</span>(<span class="hljs-params">req, res, next</span>) </span>{</span><br><span class="line">	res.locals.validated = <span class="hljs-literal">true</span>;</span><br><span class="line">	next()</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Apply the middleware to all method at route '/'</span></span><br><span class="line">app.use(<span class="hljs-string">'/'</span> ,validateUser)</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Apply the middleware to "GET" method at route '/'</span></span><br><span class="line">app.get(<span class="hljs-string">'/'</span>, validateUser)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="hljs-number">3000</span>)</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="Use-the-built-in-middleware"><a href="#Use-the-built-in-middleware" class="headerlink" title="Use the built-in middleware"></a>Use the built-in middleware</h2><ul>
 <li><code>express.json()</code> : 解析 conten-type 是 <code>application/json</code> 的 request</li>
 <li><code>express.urlencoded()</code> : 解析 conten-type 是 <code>application/x-www-form-urlencoded</code> 的 request , 最常見 POST 提交數據的方式，瀏覽器的原生</li>
 </ul>
 <p>表單，如果沒有設置 enctype 屬性，就會以默認以此方式提交數據</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">POST &lt;http:<span class="comment">//www.example.com&gt; HTTP/1.1</span></span><br><span class="line">Content-Type: application/x-www-form-urlencoded;charset=utf-<span class="number">8</span></span><br><span class="line">title=test&amp;sub%5B%5D=<span class="number">1</span>&amp;sub%5B%5D=<span class="number">2</span>&amp;sub%5B%5D=<span class="number">3</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line">POST &lt;http:<span class="hljs-comment">//www.example.com&gt; HTTP/1.1</span></span><br><span class="line">Content-Type: application/x-www-form-urlencoded;charset=utf-<span class="hljs-number">8</span></span><br><span class="line">title=test&amp;sub%5B%5D=<span class="hljs-number">1</span>&amp;sub%5B%5D=<span class="hljs-number">2</span>&amp;sub%5B%5D=<span class="hljs-number">3</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
 <p>通過使用以上內件的 middleware, 我們就可以在 res.body 得到前端 POST 過來的資料</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">app.use(express.json())</span><br><span class="line">app.use(express.urlencoding())</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">const</span> data = res.body</span><br><span class="line">	res.send(<span class="string">&#x27;&lt;h1&gt;I got the data&lt;/h1&gt;&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">app.use(express.json())</span><br><span class="line">app.use(express.urlencoding())</span><br><span class="line"></span><br><span class="line">app.post(<span class="hljs-string">'/'</span>, <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {</span><br><span class="line">	<span class="hljs-keyword">const</span> data = res.body</span><br><span class="line">	res.send(<span class="hljs-string">'&lt;h1&gt;I got the data&lt;/h1&gt;'</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="Servering-static-content"><a href="#Servering-static-content" class="headerlink" title="Servering static content"></a>Servering static content</h2><ul>
 <li><code>express.static</code>: serving specified folder</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// express.staic 也是內建的 middleware</span></span><br><span class="line">app.use(express.static(<span class="string">&#x27;public&#x27;</span>))</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// express.staic 也是內建的 middleware</span></span><br><span class="line">app.use(express.static(<span class="hljs-string">'public'</span>))</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="使用-helmet-增加-server-安全性"><a href="#使用-helmet-增加-server-安全性" class="headerlink" title="使用 helmet 增加 server 安全性"></a>使用 helmet 增加 server 安全性</h2><p><a target="_blank" rel="noopener" href="https://expressjs.com/zh-tw/advanced/best-practice-security.html">express 文件</a></p>
 <p>使用 <a target="_blank" rel="noopener" href="https://github.com/helmetjs/helmet">Helemt</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install --save helmet</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="code"><pre><span class="line">npm install --save helmet</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="Using-View-engine"><a href="#Using-View-engine" class="headerlink" title="Using View engine"></a>Using View engine</h2><p>熱門的 view engine 選項有</p>
 <ul>
@@ -245,78 +163,78 @@
 <li>ejs</li>
 </ul>
 <p>使用前要用 npm 安裝</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install pug --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="code"><pre><span class="line">npm install pug --save</span><br></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 告知 express, 我們要使用 pug 做 view engine</span></span><br><span class="line">app.set(<span class="string">&#x27;view engine&#x27;</span>, <span class="string">&#x27;pug&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可以設定 view template 放在哪個檔案夾 , 預設會去讀同一層目錄的 views 檔案夾</span></span><br><span class="line"><span class="comment">// app.set(&#x27;views&#x27;, path.join(__dirname, &#x27;views&#x27;))</span></span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">res, res</span>) =&gt;</span> &#123;</span><br><span class="line">	res.render(<span class="string">&#x27;index&#x27;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 告知 express, 我們要使用 pug 做 view engine</span></span><br><span class="line">app.set(<span class="hljs-string">'view engine'</span>, <span class="hljs-string">'pug'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 可以設定 view template 放在哪個檔案夾 , 預設會去讀同一層目錄的 views 檔案夾</span></span><br><span class="line"><span class="hljs-comment">// app.set('views', path.join(__dirname, 'views'))</span></span><br><span class="line"></span><br><span class="line">app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function">(<span class="hljs-params">res, res</span>) =&gt;</span> {</span><br><span class="line">	res.render(<span class="hljs-string">'index'</span>)</span><br><span class="line">})</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
-<h3 id="傳值到-view-template-裡"><a href="#傳值到-view-template-裡" class="headerlink" title="傳值到 view template 裡"></a>傳值到 view template 裡</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 告知 express, 我們要使用 pug 做 view engine</span></span><br><span class="line">app.set(<span class="string">&#x27;view engine&#x27;</span>, <span class="string">&#x27;pug&#x27;</span>);</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">res, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 後面的參數其實都被放到 res.locals 裡面了</span></span><br><span class="line">  res.render(<span class="string">&#x27;index&#x27;</span>, &#123; <span class="attr">title</span>: <span class="string">&#x27;Hey&#x27;</span>, <span class="attr">message</span>: <span class="string">&#x27;Hello there!&#x27;</span>&#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="傳值到-view-template-裡"><a href="#傳值到-view-template-裡" class="headerlink" title="傳值到 view template 裡"></a>傳值到 view template 裡</h3><figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// 告知 express, 我們要使用 pug 做 view engine</span></span><br><span class="line">app.set(<span class="hljs-string">'view engine'</span>, <span class="hljs-string">'pug'</span>);</span><br><span class="line"></span><br><span class="line">app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function">(<span class="hljs-params">res, res</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// 後面的參數其實都被放到 res.locals 裡面了</span></span><br><span class="line">  res.render(<span class="hljs-string">'index'</span>, { <span class="hljs-attr">title</span>: <span class="hljs-string">'Hey'</span>, <span class="hljs-attr">message</span>: <span class="hljs-string">'Hello there!'</span>});</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    title= title</span><br><span class="line">  body</span><br><span class="line">    h1= message</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="code"><pre><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    title= title</span><br><span class="line">  body</span><br><span class="line">    h1= message</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
 
-<h2 id="Handle-cookies"><a href="#Handle-cookies" class="headerlink" title="Handle cookies"></a>Handle cookies</h2><h3 id="setCookies"><a href="#setCookies" class="headerlink" title="setCookies"></a>setCookies</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.post(<span class="string">&#x27;/proccess_login&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> userName = req.body.userName;</span><br><span class="line">  <span class="keyword">const</span> password = req.body.password;</span><br><span class="line">  <span class="keyword">if</span> (password === correctPassword) &#123;</span><br><span class="line">    res.cookie(<span class="string">&#x27;userName&#x27;</span>, userName);</span><br><span class="line">      res.redirect(<span class="string">&#x27;/welcome&#x27;</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.redirect(<span class="string">&#x27;/login?msg=fail&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Handle-cookies"><a href="#Handle-cookies" class="headerlink" title="Handle cookies"></a>Handle cookies</h2><h3 id="setCookies"><a href="#setCookies" class="headerlink" title="setCookies"></a>setCookies</h3><figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line">app.post(<span class="hljs-string">'/proccess_login'</span>, <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> userName = req.body.userName;</span><br><span class="line">  <span class="hljs-keyword">const</span> password = req.body.password;</span><br><span class="line">  <span class="hljs-keyword">if</span> (password === correctPassword) {</span><br><span class="line">    res.cookie(<span class="hljs-string">'userName'</span>, userName);</span><br><span class="line">      res.redirect(<span class="hljs-string">'/welcome'</span>)</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    res.redirect(<span class="hljs-string">'/login?msg=fail'</span>)</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <h3 id="parseCookies"><a href="#parseCookies" class="headerlink" title="parseCookies"></a>parseCookies</h3><p>Install cookie-parser</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install cookie-parser</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="code"><pre><span class="line">npm install cookie-parser</span><br></pre></td></tr></tbody></table></figure>
 
 <p>Apply cookie-parser as middleware</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">var</span> cookieParser = <span class="built_in">require</span>(<span class="string">&#x27;cookie-parser&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> app = express()</span><br><span class="line">app.use(cookieParser())</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// Cookies that have not been signed</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Cookies: &#x27;</span>, req.cookies)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Cookies that have been signed</span></span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;Signed Cookies: &#x27;</span>, req.signedCookies)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">8080</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>)</span><br><span class="line"><span class="hljs-keyword">var</span> cookieParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cookie-parser'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">var</span> app = express()</span><br><span class="line">app.use(cookieParser())</span><br><span class="line"></span><br><span class="line">app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) </span>{</span><br><span class="line">  <span class="hljs-comment">// Cookies that have not been signed</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Cookies: '</span>, req.cookies)</span><br><span class="line"></span><br><span class="line">  <span class="hljs-comment">// Cookies that have been signed</span></span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Signed Cookies: '</span>, req.signedCookies)</span><br><span class="line">})</span><br><span class="line"></span><br><span class="line">app.listen(<span class="hljs-number">8080</span>)</span><br></pre></td></tr></tbody></table></figure>
 
 <h3 id="設定-Cookie-案例"><a href="#設定-Cookie-案例" class="headerlink" title="設定 Cookie 案例"></a>設定 Cookie 案例</h3><p>我們平常在用 express 時都是回傳 JSON 格式，所以 express 會直接幫我們在 header 帶入 </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Content-Type: &#x27;application/json&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="code"><pre><span class="line">Content-Type: 'application/json'</span><br></pre></td></tr></tbody></table></figure>
 
 <p>但是如果我們今天要回傳圖片，我們就可以設定 Content-Type 為 image/jpg 格式</p>
 <p>舉例，今天使用者要取的自己的大頭貼圖片</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/user/me/avatar&#x27;</span>, auth, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.set(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;image/jpg&#x27;</span>);</span><br><span class="line">  <span class="comment">// user 物件裡的 avatar 屬性是的 base64 圖片資料</span></span><br><span class="line">  res.send(req.user.avatar)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line">app.get(<span class="hljs-string">'/user/me/avatar'</span>, auth, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {</span><br><span class="line">  res.set(<span class="hljs-string">'Content-Type'</span>, <span class="hljs-string">'image/jpg'</span>);</span><br><span class="line">  <span class="hljs-comment">// user 物件裡的 avatar 屬性是的 base64 圖片資料</span></span><br><span class="line">  res.send(req.user.avatar)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="Handle-Cookie-and-Session"><a href="#Handle-Cookie-and-Session" class="headerlink" title="Handle Cookie and Session"></a>Handle Cookie and Session</h2><p>在做用戶驗證時，常用的驗證方式之一是 Session Based 的驗證方式，簡單來說就是當用戶登入成功後，我們在將一些驗證成功的資料放在入 cookie 讓之後的 client 的 request 都帶著這個 cookie 來讓 server 進行辨識，其中有兩種做法</p>
 <ol>
 <li>將用戶資訊加密後放入 cookie 中, 可使用 <a target="_blank" rel="noopener" href="https://github.com/expressjs/cookie-session#readme">cookie-session</a> 套件來完成</li>
 <li>在 server 產生 session id，cookie 中只帶 session id, 用戶資料會存在另一個 Server 端的 DB (Redis), 每次 request 透過 session id 來辨識使用者，可以用 <a target="_blank" rel="noopener" href="https://github.com/expressjs/session#readme">express-session</a> 套件完成</li>
 </ol>
-<h2 id="Pass-data-from-URL"><a href="#Pass-data-from-URL" class="headerlink" title="Pass data from URL"></a>Pass data from URL</h2><h3 id="Query-string"><a href="#Query-string" class="headerlink" title="Query string"></a>Query string</h3><p>假設前端 request url 為: <code>https://&#123;your_domain_name&#125;/product?productId=abc13&amp;productStatus=onSell</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/product&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> query = req.query;</span><br><span class="line">  <span class="keyword">const</span> productId = query.productId;</span><br><span class="line">  <span class="keyword">const</span> productStatus = query.productStatus;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Pass-data-from-URL"><a href="#Pass-data-from-URL" class="headerlink" title="Pass data from URL"></a>Pass data from URL</h2><h3 id="Query-string"><a href="#Query-string" class="headerlink" title="Query string"></a>Query string</h3><p>假設前端 request url 為: <code>https://{your_domain_name}/product?productId=abc13&amp;productStatus=onSell</code></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line">app.get(<span class="hljs-string">'/product'</span>, <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> query = req.query;</span><br><span class="line">  <span class="hljs-keyword">const</span> productId = query.productId;</span><br><span class="line">  <span class="hljs-keyword">const</span> productStatus = query.productStatus;</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <p>在 redirect 時加入 params</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.post(<span class="string">&#x27;/proccess_login&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> userName = req.body.userName;</span><br><span class="line">  <span class="keyword">const</span> password = req.body.password;</span><br><span class="line">  <span class="keyword">if</span> (password === correctPassword) &#123;</span><br><span class="line">    res.cookie(<span class="string">&#x27;userName&#x27;</span>, userName);</span><br><span class="line">    res.redirect(<span class="string">&#x27;/welcome&#x27;</span>)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    res.redirect(<span class="string">&#x27;/login?msg=fail&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line">app.post(<span class="hljs-string">'/proccess_login'</span>, <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> userName = req.body.userName;</span><br><span class="line">  <span class="hljs-keyword">const</span> password = req.body.password;</span><br><span class="line">  <span class="hljs-keyword">if</span> (password === correctPassword) {</span><br><span class="line">    res.cookie(<span class="hljs-string">'userName'</span>, userName);</span><br><span class="line">    res.redirect(<span class="hljs-string">'/welcome'</span>)</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    res.redirect(<span class="hljs-string">'/login?msg=fail'</span>)</span><br><span class="line">  }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
-<h3 id="WildCards"><a href="#WildCards" class="headerlink" title="WildCards"></a>WildCards</h3><p>假設前端 request url 為: <code>https://&#123;your_domain_name&#125;/abc123/onSell</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/product/:productId/:productStatus:&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> productId = req.params.productId;</span><br><span class="line">  <span class="keyword">const</span> productStatus = req.params.productStatus;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="WildCards"><a href="#WildCards" class="headerlink" title="WildCards"></a>WildCards</h3><p>假設前端 request url 為: <code>https://{your_domain_name}/abc123/onSell</code></p>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line">app.get(<span class="hljs-string">'/product/:productId/:productStatus:'</span>, <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> productId = req.params.productId;</span><br><span class="line">  <span class="hljs-keyword">const</span> productStatus = req.params.productStatus;</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <h3 id="Pagination-分頁）"><a href="#Pagination-分頁）" class="headerlink" title="Pagination(分頁）"></a>Pagination(分頁）</h3><p>透過 Query String 給 API 要 filter 的條件</p>
 <ul>
 <li>GET <code>/task?completed=true</code> 只要取得完成的 task</li>
 <li>GET <code>/task?limit=10&amp;skip=10</code> 只拿 10 筆，並且跳過前十筆</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">router.ger(<span class="string">&#x27;/tasks&#x27;</span>, auth, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> query = req.query</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line">router.ger(<span class="hljs-string">'/tasks'</span>, auth, <span class="hljs-keyword">async</span> (req, res) =&gt; {</span><br><span class="line">  <span class="hljs-keyword">const</span> query = req.query</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
-<h2 id="Download-files"><a href="#Download-files" class="headerlink" title="Download files"></a>Download files</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/statement&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// res.download 第二個參數可以改下載檔案的名稱</span></span><br><span class="line">  res.download(path.join(__dirname, <span class="string">&#x27;userStatements/BankStatement.png&#x27;</span>))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Download-files"><a href="#Download-files" class="headerlink" title="Download files"></a>Download files</h2><figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line">app.get(<span class="hljs-string">'/statement'</span>, <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-comment">// res.download 第二個參數可以改下載檔案的名稱</span></span><br><span class="line">  res.download(path.join(__dirname, <span class="hljs-string">'userStatements/BankStatement.png'</span>))</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <p>express 其實只是把 header 改掉，然後呼叫 <code>res.sendFile()</code></p>
 <p><img src="https://i.imgur.com/qtUrn4g.png" alt="https://i.imgur.com/qtUrn4g.png"></p>
 <p>如果你只要將 header 的 content-disposition 改為 attchment 可以改用 <code>res.attachment()</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/statement&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">	res.attachment(path.join(__dirname, <span class="string">&#x27;userStatements/BankStatement.png&#x27;</span>))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line">app.get(<span class="hljs-string">'/statement'</span>, <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {</span><br><span class="line">	res.attachment(path.join(__dirname, <span class="hljs-string">'userStatements/BankStatement.png'</span>))</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <p>檔案下載錯誤處裡, 通常錯誤發生時 response 可能已經回了，所以不能在 callback 裡面再重新送一次, 可以利用 <code>res.headersSent</code> 檢查 header 是否已送出</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/statement&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line"> <span class="comment">// res.download 第二個參數可以改下載檔案的名稱</span></span><br><span class="line">	res.download(</span><br><span class="line">		path.join(__dirname, <span class="string">&#x27;userStatements/BankStatement.png&#x27;</span>),</span><br><span class="line">	 <span class="string">&#x27;BrianStatement&#x27;</span>,</span><br><span class="line">		<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (error) &#123;</span><br><span class="line"> 					<span class="comment">//	res.headersSent is a bool, true if headers are already sent</span></span><br><span class="line">					<span class="keyword">if</span> (！res.headersSent) &#123;</span><br><span class="line">	          res.redirect(<span class="string">&#x27;/download/error&#x27;</span>)</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line">app.get(<span class="hljs-string">'/statement'</span>, <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {</span><br><span class="line"> <span class="hljs-comment">// res.download 第二個參數可以改下載檔案的名稱</span></span><br><span class="line">	res.download(</span><br><span class="line">		path.join(__dirname, <span class="hljs-string">'userStatements/BankStatement.png'</span>),</span><br><span class="line">	 <span class="hljs-string">'BrianStatement'</span>,</span><br><span class="line">		<span class="hljs-function">(<span class="hljs-params">error</span>) =&gt;</span> {</span><br><span class="line">				<span class="hljs-keyword">if</span> (error) {</span><br><span class="line"> 					<span class="hljs-comment">//	res.headersSent is a bool, true if headers are already sent</span></span><br><span class="line">					<span class="hljs-keyword">if</span> (！res.headersSent) {</span><br><span class="line">	          res.redirect(<span class="hljs-string">'/download/error'</span>)</span><br><span class="line">					}</span><br><span class="line">				}</span><br><span class="line">		}</span><br><span class="line">	)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h2><p>express 提供，用來拆分 route 的 middleware</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> &#123; User &#125; = <span class="built_in">require</span>(<span class="string">&quot;../models&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create user</span></span><br><span class="line">router.post(<span class="string">&#x27;/users&#x27;</span>, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">new</span> User(req.body);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> savedUser = <span class="keyword">await</span> user.save()</span><br><span class="line">        res.status(<span class="number">201</span>).send(savedUser);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        res.status(<span class="number">400</span>).send(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> { User } = <span class="hljs-built_in">require</span>(<span class="hljs-string">"../models"</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> router = express.Router();</span><br><span class="line"></span><br><span class="line"><span class="hljs-comment">// Create user</span></span><br><span class="line">router.post(<span class="hljs-string">'/users'</span>, <span class="hljs-keyword">async</span> (req, res) =&gt; {</span><br><span class="line">    <span class="hljs-keyword">const</span> user = <span class="hljs-keyword">new</span> User(req.body);</span><br><span class="line">    <span class="hljs-keyword">try</span> {</span><br><span class="line">        <span class="hljs-keyword">const</span> savedUser = <span class="hljs-keyword">await</span> user.save()</span><br><span class="line">        res.status(<span class="hljs-number">201</span>).send(savedUser);</span><br><span class="line">    } <span class="hljs-keyword">catch</span> (e) {</span><br><span class="line">        res.status(<span class="hljs-number">400</span>).send(e);</span><br><span class="line">    }</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <p>向 express 註冊 Router</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> app = exprss()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> userRouter = <span class="built_in">require</span>(<span class="string">&#x27;./routes/userRouter&#x27;</span>)</span><br><span class="line"></span><br><span class="line">app.use(userRouter)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> app = exprss()</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> userRouter = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/userRouter'</span>)</span><br><span class="line"></span><br><span class="line">app.use(userRouter)</span><br></pre></td></tr></tbody></table></figure>
 
-<h2 id="Handle-Http-headers-in-Express"><a href="#Handle-Http-headers-in-Express" class="headerlink" title="Handle Http headers in Express"></a>Handle Http headers in Express</h2><h3 id="Set-header"><a href="#Set-header" class="headerlink" title="Set header"></a>Set header</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.get(<span class="string">&#x27;/&#x27;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">const</span> date = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="number">1969</span>, <span class="number">6</span>, <span class="number">20</span>)</span><br><span class="line">	res.set(<span class="string">&#x27;Date&#x27;</span>, date)</span><br><span class="line">	res.set(<span class="string">&#x27;Context-Type&#x27;</span>, <span class="string">&#x27;text/plain&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Handle-Http-headers-in-Express"><a href="#Handle-Http-headers-in-Express" class="headerlink" title="Handle Http headers in Express"></a>Handle Http headers in Express</h2><h3 id="Set-header"><a href="#Set-header" class="headerlink" title="Set header"></a>Set header</h3><figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line">app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {</span><br><span class="line">	<span class="hljs-keyword">const</span> date = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-number">1969</span>, <span class="hljs-number">6</span>, <span class="hljs-number">20</span>)</span><br><span class="line">	res.set(<span class="hljs-string">'Date'</span>, date)</span><br><span class="line">	res.set(<span class="hljs-string">'Context-Type'</span>, <span class="hljs-string">'text/plain'</span>)</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="Uploading-files-to-Express-with-Multer"><a href="#Uploading-files-to-Express-with-Multer" class="headerlink" title="Uploading files to Express with Multer"></a>Uploading files to Express with Multer</h2><p>上傳圖片的格式是 <code>multipart/form-data</code></p>
 <p>可以用 <a target="_blank" rel="noopener" href="https://github.com/expressjs/multer">multer</a> 來 parse 檔案</p>
 <p>假設我們有一個 form 可以上傳檔案</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">&#x27;post&#x27;</span> <span class="attr">action</span>=<span class="string">&#x27;formsub&#x27;</span> <span class="attr">enctype</span>=<span class="string">&#x27;multipart/form-data&#x27;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;file&#x27;</span> <span class="attr">name</span>=<span class="string">&quot;meme&quot;</span> /&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">method</span>=<span class="hljs-string">'post'</span> <span class="hljs-attr">action</span>=<span class="hljs-string">'formsub'</span> <span class="hljs-attr">enctype</span>=<span class="hljs-string">'multipart/form-data'</span>&gt;</span></span><br><span class="line">		<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'file'</span> <span class="hljs-attr">name</span>=<span class="hljs-string">"meme"</span> /&gt;</span></span><br><span class="line">	<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span></span><br><span class="line"><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>上傳單個檔案，檔案名稱需為 meme</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> multer = <span class="built_in">require</span>(<span class="string">&#x27;multer&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"><span class="keyword">const</span> upload = multer(&#123;</span><br><span class="line">	<span class="attr">dest</span>: <span class="string">&#x27;public/images/uploads&#x27;</span>,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">&#x27;/formsub&#x27;</span>, upload.single(<span class="string">&#x27;meme&#x27;</span>),<span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">const</span> fileData = req.file;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>)</span><br><span class="line"><span class="hljs-keyword">const</span> multer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'multer'</span>)</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> app = express()</span><br><span class="line"><span class="hljs-keyword">const</span> upload = multer({</span><br><span class="line">	<span class="hljs-attr">dest</span>: <span class="hljs-string">'public/images/uploads'</span>,</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line">app.post(<span class="hljs-string">'/formsub'</span>, upload.single(<span class="hljs-string">'meme'</span>),<span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {</span><br><span class="line">	<span class="hljs-keyword">const</span> fileData = req.file;</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <h3 id="限制-Upload-大小、檔案類型"><a href="#限制-Upload-大小、檔案類型" class="headerlink" title="限制 Upload 大小、檔案類型"></a>限制 Upload 大小、檔案類型</h3><p><strong>使用 <code>limits</code> option 去限制上傳檔案大小</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> multer = <span class="built_in">require</span>(<span class="string">&#x27;multer&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> upload = multer(&#123;</span><br><span class="line">  <span class="attr">dest</span>: <span class="string">&#x27;images&#x27;</span>,</span><br><span class="line">  <span class="attr">limits</span>: &#123;</span><br><span class="line">    <span class="comment">// 1 million bytes</span></span><br><span class="line">    <span class="attr">fileSize</span>: <span class="number">1000000</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">&#x27;/upload&#x27;</span>, upload.single(<span class="string">&#x27;upload&#x27;</span>), <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.send();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> multer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'multer'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> upload = multer({</span><br><span class="line">  <span class="hljs-attr">dest</span>: <span class="hljs-string">'images'</span>,</span><br><span class="line">  <span class="hljs-attr">limits</span>: {</span><br><span class="line">    <span class="hljs-comment">// 1 million bytes</span></span><br><span class="line">    <span class="hljs-attr">fileSize</span>: <span class="hljs-number">1000000</span>,</span><br><span class="line">  }</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line">app.post(<span class="hljs-string">'/upload'</span>, upload.single(<span class="hljs-string">'upload'</span>), <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {</span><br><span class="line">  res.send();</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 
 <p><strong>使用 <code>fileFilter</code> option</strong> </p>
 <p>multer 提供三個參數給你用 <code>fileFilter(req, file, cb)</code></p>
@@ -324,225 +242,149 @@
 <ul>
 <li>如果你接收這個檔案: <code>cb(null, true)</code></li>
 <li>如果你拒絕接收這個檔案： <code>cb(null, false)</code></li>
-<li>如果你想 throw 錯誤給 client： <code>cb(new Error(&#39;給 client 的錯誤&#39;))</code></li>
+<li>如果你想 throw 錯誤給 client： <code>cb(new Error('給 client 的錯誤'))</code></li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> multer = <span class="built_in">require</span>(<span class="string">&#x27;multer&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> upload = multer(&#123;</span><br><span class="line">  <span class="attr">dest</span>: <span class="string">&#x27;images&#x27;</span>,</span><br><span class="line">  <span class="attr">limits</span>: &#123;</span><br><span class="line">    <span class="comment">// 1 million bytes</span></span><br><span class="line">    <span class="attr">fileSize</span>: <span class="number">1000000</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function"><span class="title">fileFilter</span>(<span class="params">req, file, cb</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!file.originalname.endsWith(<span class="string">&#x27;.pdf&#x27;</span>)) &#123;</span><br><span class="line">      <span class="keyword">return</span> cb(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;Please upload a PDF&#x27;</span>))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cb(<span class="literal">null</span>, <span class="literal">true</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> multer = <span class="hljs-built_in">require</span>(<span class="hljs-string">'multer'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> upload = multer({</span><br><span class="line">  <span class="hljs-attr">dest</span>: <span class="hljs-string">'images'</span>,</span><br><span class="line">  <span class="hljs-attr">limits</span>: {</span><br><span class="line">    <span class="hljs-comment">// 1 million bytes</span></span><br><span class="line">    <span class="hljs-attr">fileSize</span>: <span class="hljs-number">1000000</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-function"><span class="hljs-title">fileFilter</span>(<span class="hljs-params">req, file, cb</span>)</span> {</span><br><span class="line">    <span class="hljs-keyword">if</span> (!file.originalname.endsWith(<span class="hljs-string">'.pdf'</span>)) {</span><br><span class="line">      <span class="hljs-keyword">return</span> cb(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Please upload a PDF'</span>))</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    cb(<span class="hljs-literal">null</span>, <span class="hljs-literal">true</span>);</span><br><span class="line">  }</span><br><span class="line">});</span><br></pre></td></tr></tbody></table></figure>
 
 <p><strong>使用 <code>storage</code> option 將設定為 <code>memoryStorage</code></strong></p>
 <p>這個選項會存在記憶體中的選項轉為 <code>Buffer</code> 格式，可以透過 <code>req.file.buffer</code> 取得檔案 buffer</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> storage = multer.memoryStorage()</span><br><span class="line"><span class="keyword">const</span> upload = multer(&#123; <span class="attr">storage</span>: storage &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> upload = multer(&#123;</span><br><span class="line">  <span class="function"><span class="title">fileFilter</span>(<span class="params">req, file, cb</span>)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!file.originalname.endsWith(<span class="string">&#x27;.pdf&#x27;</span>)) &#123;</span><br><span class="line">      <span class="keyword">return</span> cb(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;Please upload a PDF&#x27;</span>))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cb(<span class="literal">null</span>, <span class="literal">true</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">	storage</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">router.post(<span class="string">&#x27;/users/me/avatar&#x27;</span>, auth, upload.single(<span class="string">&#x27;avatar&#x27;</span>), <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">    req.user.avatar = req.file.buffer;</span><br><span class="line">    <span class="keyword">await</span> req.user.save();</span><br><span class="line">    res.send(<span class="string">&#x27;ok&#x27;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> storage = multer.memoryStorage()</span><br><span class="line"><span class="hljs-keyword">const</span> upload = multer({ <span class="hljs-attr">storage</span>: storage })</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> upload = multer({</span><br><span class="line">  <span class="hljs-function"><span class="hljs-title">fileFilter</span>(<span class="hljs-params">req, file, cb</span>)</span> {</span><br><span class="line">    <span class="hljs-keyword">if</span> (!file.originalname.endsWith(<span class="hljs-string">'.pdf'</span>)) {</span><br><span class="line">      <span class="hljs-keyword">return</span> cb(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Please upload a PDF'</span>))</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    cb(<span class="hljs-literal">null</span>, <span class="hljs-literal">true</span>);</span><br><span class="line">  },</span><br><span class="line">	storage</span><br><span class="line">});</span><br><span class="line"></span><br><span class="line">router.post(<span class="hljs-string">'/users/me/avatar'</span>, auth, upload.single(<span class="hljs-string">'avatar'</span>), <span class="hljs-keyword">async</span> (req, res) =&gt; {</span><br><span class="line">    req.user.avatar = req.file.buffer;</span><br><span class="line">    <span class="hljs-keyword">await</span> req.user.save();</span><br><span class="line">    res.send(<span class="hljs-string">'ok'</span>);</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <h2 id="Handling-Express-Errors"><a href="#Handling-Express-Errors" class="headerlink" title="Handling Express Errors"></a>Handling Express Errors</h2><p>如果前面 middleware 丟出錯誤，我們可以新增 <strong>Error Handling Middleware</strong></p>
 <p>Error Handling Middleware, <strong>與一般 middleware 的差別是</strong></p>
 <p><strong>只有在 call signature 都是四個參數的的情況下，express 才會認定這是 error handling middleware,並且 call 這個 function</strong></p>
 <p>以下例子，我們先加上一個直接丟錯誤的 middleware 在 route handler 的前面, 後面加上再加上Error Handling Middleware</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> errorMiddleware = <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;From my middleware&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">&#x27;/upload&#x27;</span>, errorMiddleware, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">		res.send(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line">&#125;, <span class="function">(<span class="params">err, req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">	res.status(<span class="number">500</span>).send(&#123; <span class="attr">error</span>: error.message &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> errorMiddleware = <span class="hljs-function">(<span class="hljs-params">req, res, next</span>) =&gt;</span> {</span><br><span class="line">	<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'From my middleware'</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">app.post(<span class="hljs-string">'/upload'</span>, errorMiddleware, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {</span><br><span class="line">		res.send(<span class="hljs-string">'ok'</span>)</span><br><span class="line">}, <span class="hljs-function">(<span class="hljs-params">err, req, res, next</span>) =&gt;</span> {</span><br><span class="line">	res.status(<span class="hljs-number">500</span>).send({ <span class="hljs-attr">error</span>: error.message })</span><br><span class="line">})</span><br></pre></td></tr></tbody></table></figure>
 
 <p>當實際執行可以發現當 error 被 throw 後 ，route handler 被跳過了，直接執行 Error Handling Middleware</p>
 <p>其他細節和用法可以參考 express 文件:</p>
 <p><a target="_blank" rel="noopener" href="https://expressjs.com/zh-tw/guide/error-handling.html">錯誤處理</a></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/express/">#express</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/node-js/">#node.js</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop  article-nav-prev">
+            
+            <a href="/2021/10/06/%E4%BD%BF%E7%94%A8-apollo-studio-%E8%88%87-express-session-%E7%84%A1%E6%B3%95-setCookie-%E5%95%8F%E9%A1%8C/">使用 apollo-studio 與 express-session 無法 set-cookie 問題</a>
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/10/01/%E5%A6%82%E4%BD%95%E5%9C%A8-React-Native-%E5%B0%88%E6%A1%88%E6%96%B0%E5%A2%9E-iOS-Widgets/">如何在 React Native 專案新增 iOS Widgets</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
 
     </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 Brian Chen&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
 
-    
-    
-    
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/express/" rel="tag"># express</a>
-              <a href="/tags/node-js/" rel="tag"># node.js</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2021/10/01/%E5%A6%82%E4%BD%95%E5%9C%A8-React-Native-%E5%B0%88%E6%A1%88%E6%96%B0%E5%A2%9E-iOS-Widgets/" rel="prev" title="如何在 React Native 專案新增 iOS Widgets">
-      <i class="fa fa-chevron-left"></i> 如何在 React Native 專案新增 iOS Widgets
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/10/06/%E4%BD%BF%E7%94%A8-apollo-studio-%E8%88%87-express-session-%E7%84%A1%E6%B3%95-setCookie-%E5%95%8F%E9%A1%8C/" rel="next" title="使用 apollo-studio 與 express-session 無法 set-cookie 問題">
-      使用 apollo-studio 與 express-session 無法 set-cookie 問題 <i class="fa fa-chevron-right"></i>
-    </a></div>
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/BrianCodeItUp">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
     </div>
-      </footer>
-    
-  </article>
-  
-  
-  
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
 
-
-
-          </div>
-          
-
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
 <script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
     });
-  }
 </script>
 
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Express-Concept"><span class="nav-number">1.</span> <span class="nav-text">Express Concept</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Expresss-Basic-Routing"><span class="nav-number">2.</span> <span class="nav-text">Expresss Basic Routing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Apply-Middleware"><span class="nav-number">3.</span> <span class="nav-text">Apply Middleware</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-the-built-in-middleware"><span class="nav-number">4.</span> <span class="nav-text">Use the built-in middleware</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servering-static-content"><span class="nav-number">5.</span> <span class="nav-text">Servering static content</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-helmet-%E5%A2%9E%E5%8A%A0-server-%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">6.</span> <span class="nav-text">使用 helmet 增加 server 安全性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-View-engine"><span class="nav-number">7.</span> <span class="nav-text">Using View engine</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%82%B3%E5%80%BC%E5%88%B0-view-template-%E8%A3%A1"><span class="nav-number">7.1.</span> <span class="nav-text">傳值到 view template 裡</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handle-cookies"><span class="nav-number">8.</span> <span class="nav-text">Handle cookies</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#setCookies"><span class="nav-number">8.1.</span> <span class="nav-text">setCookies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parseCookies"><span class="nav-number">8.2.</span> <span class="nav-text">parseCookies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A-Cookie-%E6%A1%88%E4%BE%8B"><span class="nav-number">8.3.</span> <span class="nav-text">設定 Cookie 案例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handle-Cookie-and-Session"><span class="nav-number">9.</span> <span class="nav-text">Handle Cookie and Session</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pass-data-from-URL"><span class="nav-number">10.</span> <span class="nav-text">Pass data from URL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Query-string"><span class="nav-number">10.1.</span> <span class="nav-text">Query string</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WildCards"><span class="nav-number">10.2.</span> <span class="nav-text">WildCards</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pagination-%E5%88%86%E9%A0%81%EF%BC%89"><span class="nav-number">10.3.</span> <span class="nav-text">Pagination(分頁）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Download-files"><span class="nav-number">11.</span> <span class="nav-text">Download files</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Router"><span class="nav-number">12.</span> <span class="nav-text">Router</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handle-Http-headers-in-Express"><span class="nav-number">13.</span> <span class="nav-text">Handle Http headers in Express</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-header"><span class="nav-number">13.1.</span> <span class="nav-text">Set header</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Uploading-files-to-Express-with-Multer"><span class="nav-number">14.</span> <span class="nav-text">Uploading files to Express with Multer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E5%88%B6-Upload-%E5%A4%A7%E5%B0%8F%E3%80%81%E6%AA%94%E6%A1%88%E9%A1%9E%E5%9E%8B"><span class="nav-number">14.1.</span> <span class="nav-text">限制 Upload 大小、檔案類型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handling-Express-Errors"><span class="nav-number">15.</span> <span class="nav-text">Handling Express Errors</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Brian Chen</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-          <span class="site-state-item-count">14</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">9</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/BrianCodeItUp" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BrianCodeItUp" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="/wl00387719@gmail.com" title="E-Mail → wl00387719@gmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Brian Chen</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
-  </div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
 
-        
+<script src="/js/insight.js"></script>
 
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
+    
 </body>
 </html>
