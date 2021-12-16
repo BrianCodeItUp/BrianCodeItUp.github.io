@@ -135,7 +135,7 @@
 <ul>
 <li>創建一個 VPC</li>
 <li>在 VPC 裡創建兩個以上的 public subnet，分別放到 2 個 Availability Zone</li>
-<li>創建 EC2 instance template 並在 user data 裡為 EC2 instance 安裝 Docker 以拉下程式的 Docker Image，然後運行 Container，一個 EC2 instance 會運行多個 Container</li>
+<li>創建 EC2 instance template 並在 user data 裡為 EC2 instance 安裝 Docker 以後拉下程式的 Docker Image，然後運行 Container，一個 EC2 instance 會運行多個 Container</li>
 <li>創建 EC2 Auto Scaling Group 和 Load Balancer 將流量導到這些 EC2 Instance</li>
 </ul>
 <p>但是我們該如何在每個 EC2 Instance 裡放入這些 Container，我們會需要 container orchestration 來進行管理，也就是容器編排，這就談到我們今天的主角了 “AWS ECS”，以上流程建立出來的架構大概會是這樣</p>

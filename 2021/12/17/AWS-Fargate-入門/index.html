@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/3609F042-242B-4A0D-A8AD-779FEDB820EC/6BB04EDF-0172-4685-A1D1-45CF61330D4F_2/Untitled%209.png">
 <meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/3609F042-242B-4A0D-A8AD-779FEDB820EC/BEE81CDF-C377-4481-AE16-6F9A0E21B3B2_2/Untitled%2010.png">
 <meta property="article:published_time" content="2021-12-16T18:15:18.000Z">
-<meta property="article:modified_time" content="2021-12-16T18:25:49.433Z">
+<meta property="article:modified_time" content="2021-12-16T18:36:04.567Z">
 <meta property="article:author" content="Brian Chen">
 <meta property="article:tag" content="Frontend">
 <meta property="article:tag" content="Backend">
@@ -150,7 +150,7 @@
 <ul>
 <li>創建一個 VPC</li>
 <li>在 VPC 裡創建兩個以上的 public subnet，分別放到 2 個 Availability Zone</li>
-<li>創建 EC2 instance template 並在 user data 裡為 EC2 instance 安裝 Docker 以拉下程式的 Docker Image，然後運行 Container，一個 EC2 instance 會運行多個 Container</li>
+<li>創建 EC2 instance template 並在 user data 裡為 EC2 instance 安裝 Docker 以後拉下程式的 Docker Image，然後運行 Container，一個 EC2 instance 會運行多個 Container</li>
 <li>創建 EC2 Auto Scaling Group 和 Load Balancer 將流量導到這些 EC2 Instance</li>
 </ul>
 <p>但是我們該如何在每個 EC2 Instance 裡放入這些 Container，我們會需要 container orchestration 來進行管理，也就是容器編排，這就談到我們今天的主角了 “AWS ECS”，以上流程建立出來的架構大概會是這樣</p>
@@ -178,7 +178,7 @@
 </ol>
 <p>一層一層向外設定</p>
 <p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/3609F042-242B-4A0D-A8AD-779FEDB820EC/6D7C0494-F2AA-408B-8899-E7E05FCC26EB_2/Untitled%202.png" alt="Untitled 2.png"></p>
-<h3 id="2-2-實作：用-Fargate-部署一個-Ngnix-Container"><a href="#2-2-實作：用-Fargate-部署一個-Ngnix-Container" class="headerlink" title="2.2 實作：用 Fargate 部署一個 Ngnix Container"></a>2.2 實作：用 Fargate 部署一個 Ngnix Container</h3><p>到 ECS 頁面後選擇下 Get Started</p>
+<h3 id="2-2-實作：用-Fargate-部署一個-Nginx-Container"><a href="#2-2-實作：用-Fargate-部署一個-Nginx-Container" class="headerlink" title="2.2 實作：用 Fargate 部署一個 Nginx Container"></a>2.2 實作：用 Fargate 部署一個 Nginx Container</h3><p>到 ECS 頁面後選擇下 Get Started</p>
 <ol>
 <li>定義 Container Definition 和 Task definition</li>
 </ol>
