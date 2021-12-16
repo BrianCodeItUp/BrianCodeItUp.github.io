@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>AWS VPC 筆記 - Brian&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="">
+
+
+
+<meta name="keywords" content="Frontend,Backend,Linux,Python,React,react,react native,Java">
+
+
+
+    <meta name="description" content="VPC 可以想成是一道牆，沒有你的同意外面的東西不能進牆內，同理裡面的東西不能出牆外，主要的設定有兩個  Region IP range: 用 CIDR 表示的的 IP 範圍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS VPC 筆記">
+<meta property="og:url" content="https://briancodeitup.blog/2021/12/16/AWS-VPC-%E7%AD%86%E8%A8%98/index.html">
+<meta property="og:site_name" content="Brian&#39;s Blog">
+<meta property="og:description" content="VPC 可以想成是一道牆，沒有你的同意外面的東西不能進牆內，同理裡面的東西不能出牆外，主要的設定有兩個  Region IP range: 用 CIDR 表示的的 IP 範圍">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/462B0C3F-5F9A-4312-BBCE-08BBEAC9E9BC_2/Image.png">
+<meta property="og:image" content="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a1a567bb-05c3-4cbe-bed0-a8e1f6a9dd14/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Credential=AKIAT73L2G45EIPT3X45/20211216/us-west-2/s3/aws4_request&amp;X-Amz-Date=20211216T093637Z&amp;X-Amz-Expires=86400&amp;X-Amz-Signature=da48ac0cf706d9ecd982e5db354da548dda7974b636de7e5affe1d4211945825&amp;X-Amz-SignedHeaders=host&amp;response-content-disposition=filename%20=%22Untitled.png%22&amp;x-id=GetObject">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/FD9EF3E5-B873-4C19-A15E-3E61612D4E10_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/A64533E6-0D90-4ECC-8736-31626875F1A2_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/9FCDEC2B-8092-4AF5-B62F-7B8D33704553_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/4159EDAE-8B54-4395-96EA-DF55ABC1D33E_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/3F5589FA-9B8C-494C-9EBC-B0EEC5898362_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/67EB704A-25D3-4736-8D84-A2F8EC66F782_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/E951D2B2-4D66-4221-AF64-A9EBBAC3EA00_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/A892D102-A6CB-4C3E-A755-4CD280870DE7_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/42B77240-CC65-4383-9A4A-2150DDA6F2D1_2/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/03029BAB-6731-46E2-BCA0-6E9D82969E0E_2/Image.png">
+<meta property="article:published_time" content="2021-12-16T09:29:35.000Z">
+<meta property="article:modified_time" content="2021-12-16T09:40:58.524Z">
+<meta property="article:author" content="Brian Chen">
+<meta property="article:tag" content="AWS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/462B0C3F-5F9A-4312-BBCE-08BBEAC9E9BC_2/Image.png">
+
+
+
+
+
+<link rel="icon" href="/images/blog-icon.svg">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Brian
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/BrianCodeItUp">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            AWS VPC 筆記
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>12月 16 2021</span>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>VPC 可以想成是一道牆，沒有你的同意外面的東西不能進牆內，同理裡面的東西不能出牆外，主要的設定有兩個</p>
+<ul>
+<li>Region</li>
+<li>IP range: 用 CIDR 表示的的 IP 範圍</li>
+</ul>
+<span id="more"></span>
+<h2 id="Subnet"><a href="#Subnet" class="headerlink" title="Subnet"></a><strong>Subnet</strong></h2><p>你可以在 VPC 切一個一個的 subnet 去放不同的資源，subnet 主要的用的在於更精細的調整資源的取用，比如我一個外對開放的 backend service 跑在 EC2 上，那我讀可以開一個 Subnet A 接受外部請求，但我的 DB 不想要可以被外部連接，我可以將另一個 subnet 來放我的 DB</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/462B0C3F-5F9A-4312-BBCE-08BBEAC9E9BC_2/Image.png" alt="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/462B0C3F-5F9A-4312-BBCE-08BBEAC9E9BC_2/Image.png"></p>
+<p>創建一個 Subnet 要有</p>
+<ul>
+<li>VPC</li>
+<li>AZ (Availablity Zone)</li>
+<li>IP range</li>
+</ul>
+<h2 id="被-AWS-保留的-IP"><a href="#被-AWS-保留的-IP" class="headerlink" title="被 AWS 保留的 IP"></a><strong>被 AWS 保留的 IP</strong></h2><p>AWS 會在每個 Subnet 保留 5 個 IP 做 networking 管理使用</p>
+<p>假設 VPC 的的 IP 範圍是 10.0.0.0/22，所以總共有 1024 個 IP Address, 如果往下開 4 個 /24 IP 範圍的 subnet，每個 subnet 實際可以使用的 IP 數量是</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="code"><pre><span class="line">1024/4 - 5 = 251</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/a1a567bb-05c3-4cbe-bed0-a8e1f6a9dd14/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Credential=AKIAT73L2G45EIPT3X45/20211216/us-west-2/s3/aws4_request&amp;X-Amz-Date=20211216T093637Z&amp;X-Amz-Expires=86400&amp;X-Amz-Signature=da48ac0cf706d9ecd982e5db354da548dda7974b636de7e5affe1d4211945825&amp;X-Amz-SignedHeaders=host&amp;response-content-disposition=filename%20=%22Untitled.png%22&amp;x-id=GetObject" alt="Untitled"></p>
+<p>新手如果怕 IP 不夠用的話可以將 VPC 的 IP 範圍開為 <code>/16</code>  然後 Subnet 的 IP 範圍開為 <code>/24</code> ，這樣就不怕 IP 數量不夠</p>
+<h2 id="Interent-gateway"><a href="#Interent-gateway" class="headerlink" title="Interent gateway"></a><strong>Interent gateway</strong></h2><p>VPC 是一個隔離、獨立的環境所以要讓外面的請求可以進到 VPC，我們需要創建 Internet gateway，<strong>並且 Attach 到 VPC 上，</strong>可以把 Internet Gateway 想是家中的數據機(modem)，需要將電腦連上數據機才能上網</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/FD9EF3E5-B873-4C19-A15E-3E61612D4E10_2/Image.png" alt="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/FD9EF3E5-B873-4C19-A15E-3E61612D4E10_2/Image.png"></p>
+<h2 id="Virtual-Private-Gateway"><a href="#Virtual-Private-Gateway" class="headerlink" title="Virtual Private Gateway"></a><strong>Virtual Private Gateway</strong></h2><p>如果你只想要連本地或私人服務連到你的 AWS VPC，沒有要連接外網，可以使用 Virtual Private Gateway(VGW)，使用 VGW 後你就可以連接公司的內網服務到 AWS VPC，VGW 會使用 VPN 連線來確保安全性</p>
+<h2 id="Route-Table"><a href="#Route-Table" class="headerlink" title="Route Table"></a><strong>Route Table</strong></h2><p>外部 Request 透 IGW 進到了 VPC，但是他怎麼知道要到哪個房間(Subnet)，需要設定 Route Table</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/A64533E6-0D90-4ECC-8736-31626875F1A2_2/Image.png" alt="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/A64533E6-0D90-4ECC-8736-31626875F1A2_2/Image.png"></p>
+<p>Route Table 裡可以設定一系列的 Routes，用來決定 Network Traffic 要導向哪，Route 可以設定在 VPC 層級或 Subnet 層級</p>
+<p>當你創建一個新的 VPC 時，AWS 會自動創建一個 Main Route Table，作用於整個 VPC，換句話說，在 VPC 內的服務可以自由的 Access 另一個 VPC 內的服務</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/9FCDEC2B-8092-4AF5-B62F-7B8D33704553_2/Image.png" alt="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/9FCDEC2B-8092-4AF5-B62F-7B8D33704553_2/Image.png"></p>
+<p>Subnet 是否為 Public 也是依據 Route Table 的設定，如果 Subnet 和 IGW 之間有建立 Route 就代表這個 Subnet 是 Public Subnet</p>
+<p>所以你需要為 Subnet 創建 Custom Route Table 來建立 Subnet 和 IGW 之間的 Route</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/4159EDAE-8B54-4395-96EA-DF55ABC1D33E_2/Image.png" alt="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/4159EDAE-8B54-4395-96EA-DF55ABC1D33E_2/Image.png"></p>
+<ul>
+<li>第一個 Route 是創建 VPC 就創建的 Main Route Table: 讓 Traffic 可以進到 VPC</li>
+<li>第二個 Route 建立該 Subnet 和 igw 間的 Route，讓 Traffic 可以倒到該 Subnet</li>
+</ul>
+<h3 id="創建-Custom-Route-Table"><a href="#創建-Custom-Route-Table" class="headerlink" title="創建 Custom Route Table"></a>創建 Custom Route Table</h3><p><strong>VPC → Route Table</strong></p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/3F5589FA-9B8C-494C-9EBC-B0EEC5898362_2/Image.png" alt="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/3F5589FA-9B8C-494C-9EBC-B0EEC5898362_2/Image.png"></p>
+<p><strong>選擇 VPC</strong></p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/67EB704A-25D3-4736-8D84-A2F8EC66F782_2/Image.png" alt="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/67EB704A-25D3-4736-8D84-A2F8EC66F782_2/Image.png"></p>
+<p><strong>新增Subnet與 Internet Gateway 間的 Route</strong></p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/E951D2B2-4D66-4221-AF64-A9EBBAC3EA00_2/Image.png" alt="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/E951D2B2-4D66-4221-AF64-A9EBBAC3EA00_2/Image.png"></p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/A892D102-A6CB-4C3E-A755-4CD280870DE7_2/Image.png" alt="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/A892D102-A6CB-4C3E-A755-4CD280870DE7_2/Image.png"></p>
+<ul>
+<li>0.0.0.0/0 說明這個 Route 可以接受和傳送來自任何地方的 Traffic</li>
+<li>Target 下拉選單打 internet gateway，會就自動跳該 VPC 現有的 igw 給你選</li>
+</ul>
+<p><strong>綁定 Subnet 與 Route Table</strong></p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/42B77240-CC65-4383-9A4A-2150DDA6F2D1_2/Image.png" alt="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/42B77240-CC65-4383-9A4A-2150DDA6F2D1_2/Image.png"></p>
+<p>選擇我們要綁定的 Subnet</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/03029BAB-6731-46E2-BCA0-6E9D82969E0E_2/Image.png" alt="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/D8BCF491-9756-4B9D-8F4C-88720C7BEA77/03029BAB-6731-46E2-BCA0-6E9D82969E0E_2/Image.png"></p>
+<h2 id="設定-VPC-順序-Cheatsheet"><a href="#設定-VPC-順序-Cheatsheet" class="headerlink" title="設定 VPC 順序 (Cheatsheet)"></a>設定 VPC 順序 (Cheatsheet)</h2><ol>
+<li>創建 VPC</li>
+<li>創建 Subnet</li>
+<li>創建 Internet Gateway</li>
+<li>創建 Custom Route Table</li>
+</ol>
+<hr>
+<p>Reference:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_tw/vpc/latest/userguide/VPC_Subnets.html">VPC 和子網路</a></li>
+</ul>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/AWS/">#AWS</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop is-hidden-mobile article-nav-prev">
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/12/01/Database-%E6%95%88%E8%83%BD%E8%AA%BF%E6%A0%A1-%E4%B8%80-Index/">Database Index 是什麼？</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2021 Brian Chen&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/BrianCodeItUp">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>
