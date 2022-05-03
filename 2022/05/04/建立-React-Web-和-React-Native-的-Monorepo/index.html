@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>建立 React Web 和 React Native 的 Monorepo - Brian&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="">
+
+
+
+<meta name="keywords" content="Frontend,Backend,Linux,Python,React,react,react native,Java">
+
+
+
+    <meta name="description" content="使用 React Native 開發 APP 的一大好處就是可以與 React Web 共用程式，除了 UI, Routing 等無法共用以外，商業邏輯、hooks、utils、api 層處理，通通可以共用，要達到此目的我們可以使用 Monorepo，如果不知道 Monorepo 是什麼的可以參考 Fireship 的影片，概念上就是將所有的專案都放在同一個 repo 下達到方便共用的目的 Mon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="建立 React Web 和 React Native 的 Monorepo">
+<meta property="og:url" content="https://briancodeitup.blog/2022/05/04/%E5%BB%BA%E7%AB%8B-React-Web-%E5%92%8C-React-Native-%E7%9A%84-Monorepo/index.html">
+<meta property="og:site_name" content="Brian&#39;s Blog">
+<meta property="og:description" content="使用 React Native 開發 APP 的一大好處就是可以與 React Web 共用程式，除了 UI, Routing 等無法共用以外，商業邏輯、hooks、utils、api 層處理，通通可以共用，要達到此目的我們可以使用 Monorepo，如果不知道 Monorepo 是什麼的可以參考 Fireship 的影片，概念上就是將所有的專案都放在同一個 repo 下達到方便共用的目的 Mon">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/ED2B30BE-68E0-4CDA-8689-A979D20B3308/1C5F94F3-63B9-4E05-ABB7-41098DCDA560_2/l1kwgyprXDuhoMzzi6t9fiPyNxHE8zBQ9r8ghqDMcRYz/Image.png">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/ED2B30BE-68E0-4CDA-8689-A979D20B3308/86B06104-7D2E-4CBE-8F2F-07A9539568A8_2/2TnXBYbzYSyx9XFLnV15uytxVEbQmUP9I6moLZGixUMz/Image.png">
+<meta property="article:published_time" content="2022-05-03T18:51:46.000Z">
+<meta property="article:modified_time" content="2022-05-03T18:56:48.037Z">
+<meta property="article:author" content="Brian Chen">
+<meta property="article:tag" content="react-native">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/ED2B30BE-68E0-4CDA-8689-A979D20B3308/1C5F94F3-63B9-4E05-ABB7-41098DCDA560_2/l1kwgyprXDuhoMzzi6t9fiPyNxHE8zBQ9r8ghqDMcRYz/Image.png">
+
+
+
+
+
+<link rel="icon" href="/images/blog-icon.svg">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Brian
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/BrianCodeItUp">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            建立 React Web 和 React Native 的 Monorepo
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>5月 4 2022</span>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>使用 React Native 開發 APP 的一大好處就是可以與 React Web 共用程式，除了 UI, Routing 等無法共用以外，商業邏輯、hooks、utils、api 層處理，通通可以共用，要達到此目的我們可以使用 Monorepo，如果不知道 Monorepo 是什麼的可以參考 Fireship 的影片，概念上就是將所有的專案都放在同一個 repo 下達到方便共用的目的</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=9iU_IE6vnJ8">Monorepos - How the Pros Scale Huge Software Projects // Turborepo vs Nx</a></p>
+<span id="more"></span>
+<h2 id="1-建立專案"><a href="#1-建立專案" class="headerlink" title="1. 建立專案"></a>1. 建立專案</h2><p>這我們要做的文件夾結構，各個專案放在 packages 的資料夾內，其中的 common 資料夾是放 app 與 web 共用的程式</p>
+<figure class="highlight plaintext hljs"><table><tbody><tr><td class="code"><pre><span class="line">├── package.json</span><br><span class="line">└── packages</span><br><span class="line">    ├── app</span><br><span class="line">    ├── common</span><br><span class="line">    └── web</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="1-1-建立文件夾與各專案"><a href="#1-1-建立文件夾與各專案" class="headerlink" title="1.1 建立文件夾與各專案"></a>1.1 建立文件夾與各專案</h3><p>cd 到 packages 目錄後，使用 CLI 工具建立各專案</p>
+<ul>
+<li>APP 的部分使用 React Native CLI，這裡我們設定使用 TypeScript 的模板</li>
+</ul>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="code"><pre><span class="line">npx react-native init app --template react-native-template-typescript</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>Web 的部分使用 Create-React-App</li>
+</ul>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="code"><pre><span class="line">npx create-react-app web --template typescript</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="2-設定-Yarn-Workspace"><a href="#2-設定-Yarn-Workspace" class="headerlink" title="2. 設定 Yarn Workspace"></a>2. 設定 Yarn Workspace</h2><p>先移除各專案中的 node_modules</p>
+<figure class="highlight bash hljs"><table><tbody><tr><td class="code"><pre><span class="line">rm -rf packages/*/node_modules/</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這理我們使用 Yarn Workspace 來建立 Monorepo，當然也可以使用其它的工具像是 Nx, Turborepo, Lerna 等，有機會之後試玩看看在寫文章與大家分享差別在哪</p>
+<p>設定專案根目錄的 package.json，加上 private 為 true 和workspaces 屬性</p>
+<figure class="highlight json hljs"><table><tbody><tr><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="hljs-attr">"private"</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"todo"</span>,</span><br><span class="line">  <span class="hljs-attr">"version"</span>: <span class="hljs-string">"1.0.0"</span>,</span><br><span class="line">  <span class="hljs-attr">"description"</span>: <span class="hljs-string">""</span>,</span><br><span class="line">  <span class="hljs-attr">"main"</span>: <span class="hljs-string">"index.js"</span>,</span><br><span class="line">  <span class="hljs-attr">"scripts"</span>: {</span><br><span class="line">    <span class="hljs-attr">"test"</span>: <span class="hljs-string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">"keywords"</span>: [],</span><br><span class="line">  <span class="hljs-attr">"author"</span>: <span class="hljs-string">""</span>,</span><br><span class="line">  <span class="hljs-attr">"license"</span>: <span class="hljs-string">"ISC"</span>,</span><br><span class="line">  <span class="hljs-attr">"workspaces"</span>: {</span><br><span class="line">    <span class="hljs-attr">"packages"</span>: [<span class="hljs-string">"packages/*"</span>],</span><br><span class="line">    <span class="hljs-attr">"nohoist"</span>: [<span class="hljs-string">"**/react-native"</span>, <span class="hljs-string">"**/react-native/**"</span>]</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>根目錄的 package.json</p>
+<p>其中比較特別的是 nohoist 屬性，因為 yarn workspaces 會將所有的 dependencies 都安裝在專案根目錄中的 node_modules 裡，來避免底下的專案安裝同樣的包，來達到共享依賴包的機制，yarn 在 packages 的專案裡的 node_modules  會創建 symlinks (軟鏈結)，來讓專案可以找到需要的依賴包</p>
+<p>但是 react-native 所使用的 metro bundler 沒有支援 symlinks 的功能，所以 react-native 專案需要的套件必須在 app 目錄裡的 node_moudles 裡，metro 在打包時才找得到</p>
+<h2 id="3-設定共用專案"><a href="#3-設定共用專案" class="headerlink" title="3. 設定共用專案"></a>3. 設定共用專案</h2><p>在 packages 目錄新增一個 common 資料夾，然後使用 <code>npm init -y</code> 來新增一個 npm 模組，更改 package.json 來調整套件名稱，方便之後在 app 或 web 的專案裡辨識</p>
+<p>如果要用 TypeScript 的話，記得將 package.json 裡的 main 屬性改為 index.ts，這會設定這個專案的主要檔案為 index.ts</p>
+<figure class="highlight json hljs"><table><tbody><tr><td class="code"><pre><span class="line">{</span><br><span class="line">  <span class="hljs-attr">"name"</span>: <span class="hljs-string">"&lt;你的專案名稱&gt;/common"</span>,</span><br><span class="line">  <span class="hljs-attr">"version"</span>: <span class="hljs-string">"1.0.0"</span>,</span><br><span class="line">  <span class="hljs-attr">"description"</span>: <span class="hljs-string">""</span>,</span><br><span class="line">  <span class="hljs-attr">"main"</span>: <span class="hljs-string">"index.ts"</span>, &lt;-- 如果有用 TypeScript 的話，記得改這裡</span><br><span class="line">  <span class="hljs-attr">"scripts"</span>: {</span><br><span class="line">    <span class="hljs-attr">"test"</span>: <span class="hljs-string">"echo \"Error: no test specified\" &amp;&amp; exit 1"</span></span><br><span class="line">  },</span><br><span class="line">  <span class="hljs-attr">"keywords"</span>: [],</span><br><span class="line">  <span class="hljs-attr">"author"</span>: <span class="hljs-string">""</span>,</span><br><span class="line">  <span class="hljs-attr">"license"</span>: <span class="hljs-string">"ISC"</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>common 的 package.json</p>
+<p>然後試著新增一個 index.ts，export 一個 function 方便我們測試</p>
+<figure class="highlight typescript hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">testFunction</span> (<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'test function fire'</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>index.ts</p>
+<h2 id="4-使用共用專案"><a href="#4-使用共用專案" class="headerlink" title="4. 使用共用專案"></a>4. 使用共用專案</h2><p><strong>在 app 的 pacakge.json 中新增共用依賴包</strong></p>
+<figure class="highlight json hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-string">"dependencies"</span>: {</span><br><span class="line">    <span class="hljs-attr">"react"</span>: <span class="hljs-string">"17.0.2"</span>,</span><br><span class="line">    <span class="hljs-attr">"react-native"</span>: <span class="hljs-string">"0.68.1"</span>,</span><br><span class="line"> +  <span class="hljs-attr">"&lt;你的專案&gt;/common"</span>: <span class="hljs-string">"1.0.0"</span></span><br><span class="line"> },</span><br></pre></td></tr></tbody></table></figure>
+
+<p>然後跑一次  yarn 指令來安裝依賴包</p>
+<p>到這裡我們還不能使用 common 包裡的程式，我們需要設定 metro 來讀取根目錄的 node_modules，因為我們的 common 包會被放在那</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="hljs-built_in">module</span>.exports = {</span><br><span class="line">    <span class="hljs-attr">transformer</span>: {</span><br><span class="line">        <span class="hljs-attr">getTransformOptions</span>: <span class="hljs-keyword">async</span> () =&gt; ({</span><br><span class="line">            <span class="hljs-attr">transform</span>: {</span><br><span class="line">                <span class="hljs-attr">experimentalImportSupport</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">                <span class="hljs-attr">inlineRequires</span>: <span class="hljs-literal">true</span>,</span><br><span class="line">            },</span><br><span class="line">        }),</span><br><span class="line">    },</span><br><span class="line">    <span class="hljs-attr">resolver</span>: {</span><br><span class="line">      <span class="hljs-attr">extraNodeModules</span>: {</span><br><span class="line">        <span class="hljs-string">'node_modules'</span>: path.resolve(__dirname, <span class="hljs-string">'..'</span>, <span class="hljs-string">'..'</span>)</span><br><span class="line">      }</span><br><span class="line">    },</span><br><span class="line">    <span class="hljs-attr">watchFolders</span>: [</span><br><span class="line">      path.resolve(path.join(__dirname, <span class="hljs-string">'../..'</span>))</span><br><span class="line">    ]</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<p>我們主要設定了</p>
+<ul>
+<li>resolver 裡的 extraNodeModules 為根目錄的 node_modules</li>
+<li>設定  watchFolders 監看整個專案</li>
+</ul>
+<h2 id="5-測試看看吧"><a href="#5-測試看看吧" class="headerlink" title="5. 測試看看吧"></a>5. 測試看看吧</h2><p>我們分別在 app 跟 web 的 App.tsx 元件裡使用剛剛從 common 裡 export 的 function</p>
+<h3 id="測試-App"><a href="#測試-App" class="headerlink" title="測試 App"></a>測試 App</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> { testFunction } <span class="hljs-keyword">from</span> <span class="hljs-string">'@todo/common'</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> App = <span class="hljs-function">() =&gt;</span> {</span><br><span class="line">  testFunction()</span><br><span class="line">  <span class="hljs-keyword">const</span> isDarkMode = useColorScheme() === <span class="hljs-string">'dark'</span>;</span><br><span class="line">  <span class="hljs-keyword">const</span> backgroundStyle = {</span><br><span class="line">    <span class="hljs-attr">backgroundColor</span>: isDarkMode ? Colors.darker : Colors.lighter,</span><br><span class="line">  };</span><br><span class="line"></span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">SafeAreaView</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{backgroundStyle}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">		// ... 以下省略</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">SafeAreaView</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">};</span><br></pre></td></tr></tbody></table></figure>
+
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/ED2B30BE-68E0-4CDA-8689-A979D20B3308/1C5F94F3-63B9-4E05-ABB7-41098DCDA560_2/l1kwgyprXDuhoMzzi6t9fiPyNxHE8zBQ9r8ghqDMcRYz/Image.png" alt="Image.png"></p>
+<h3 id="測試-Web"><a href="#測試-Web" class="headerlink" title="測試 Web"></a>測試 Web</h3><figure class="highlight javascript hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> logo <span class="hljs-keyword">from</span> <span class="hljs-string">'./logo.svg'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> <span class="hljs-string">'./App.css'</span>;</span><br><span class="line"><span class="hljs-keyword">import</span> { testFunction } <span class="hljs-keyword">from</span> <span class="hljs-string">'@todo/common'</span>;</span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">App</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  testFunction()</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">	<span class="hljs-comment">// ...省略</span></span><br><span class="line">  );</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> App;</span><br></pre></td></tr></tbody></table></figure>
+
+<p>web 的 App.tsx</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/ED2B30BE-68E0-4CDA-8689-A979D20B3308/86B06104-7D2E-4CBE-8F2F-07A9539568A8_2/2TnXBYbzYSyx9XFLnV15uytxVEbQmUP9I6moLZGixUMz/Image.png" alt="Image.png"></p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/react-native/">#react-native</a></span>
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/react/">#react</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop is-hidden-mobile article-nav-prev">
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2021/12/17/AWS-Fargate-%E5%85%A5%E9%96%80/">AWS Fargate 入門</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2022 Brian Chen&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/BrianCodeItUp">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>
