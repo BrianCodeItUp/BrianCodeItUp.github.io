@@ -58,8 +58,14 @@
 <script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 
 
+    
+    
+    
 
-<meta name="generator" content="Hexo 5.4.0"></head>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
 <body>
     
 <nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
@@ -113,6 +119,43 @@
 
     <section class="section">
     <div class="container">
+    
+        <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            <a href="/2022/05/04/Recursive-Component-%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F/" itemprop="url">Recursive Component 是什麼？</a>
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>5月 4 2022</span>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>React Component 是個 function 所以當然也可以用 Recursion，如果不知道 Recursion(遞迴) 的朋友這邊簡單的介紹一下</p>
+<p>Recursion (遞迴) 一個 function 呼叫自己，每個 recursive function 都需要有</p>
+<ul>
+<li>base case: 一但此狀態達成，就不再呼叫遞迴函式</li>
+<li>recursive case: 在此狀態下，持續呼叫遞迴函式</li>
+</ul>
+<p>$n!$ (factorial function)：在數學裡的意思是將到 n 數值乘再一起, ex: $$4! = 4 \times 3 \times 2 \times 1$$ ，在程式裡面我們習慣將其稱作 $fact(n)$</p></body></html>
+        <p class="article-more-link" style="">
+            <a href="/2022/05/04/Recursive-Component-%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F/#more">閱讀更多......</a>
+        </p>
+    
+    </div>
+    
+    
+</article>
+
+
+
+
     
         <article class="article content gallery" itemscope itemprop="blogPost">
     <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
@@ -428,38 +471,6 @@
 
 
     
-        <article class="article content gallery" itemscope itemprop="blogPost">
-    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
-        
-            <a href="/2021/10/05/Express-%E7%AD%86%E8%A8%98/" itemprop="url">Express 筆記</a>
-        
-    </h1>
-    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
-        <span class="column is-narrow">
-            
-                <span>10月 5 2021</span>
-            
-        </span>
-        
-        
-    </div>
-    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
-    
-        <html><head></head><body><h2 id="Express-Concept"><a href="#Express-Concept" class="headerlink" title="Express Concept"></a>Express Concept</h2><p>Express is a bunch of middlewares works together</p>
-<h2 id="Expresss-Basic-Routing"><a href="#Expresss-Basic-Routing" class="headerlink" title="Expresss Basic Routing"></a>Expresss Basic Routing</h2><figure class="highlight javascript hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);</span><br><span class="line"><span class="hljs-keyword">const</span> app = express();</span><br><span class="line"></span><br><span class="line">app.get(<span class="hljs-string">'/register'</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">const</span> body = req.body;</span><br><span class="line">  <span class="hljs-keyword">const</span> isSucceed =  auth(body);</span><br><span class="line">  <span class="hljs-keyword">if</span> (isSucceed) {</span><br><span class="line">    res.send(<span class="hljs-string">'Register Successfully'</span>);</span><br><span class="line">  } <span class="hljs-keyword">else</span> {</span><br><span class="line">    res.status(<span class="hljs-number">443</span>).sene(<span class="hljs-string">'Authentication fail, unable to register'</span>);</span><br><span class="line">  }</span><br><span class="line">});</span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure></body></html>
-        <p class="article-more-link" style="">
-            <a href="/2021/10/05/Express-%E7%AD%86%E8%A8%98/#more">閱讀更多......</a>
-        </p>
-    
-    </div>
-    
-    
-</article>
-
-
-
-
-    
     
         
 <nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">
@@ -536,6 +547,31 @@
     moment.locale("zh-CN");
 </script>
 
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
 
 
 

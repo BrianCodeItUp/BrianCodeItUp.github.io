@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+<title>Recursive Component 是什麼？ - Brian&#39;s Blog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.css">
+
+
+
+
+<meta name="description" content="">
+
+
+
+<meta name="keywords" content="Frontend,Backend,Linux,Python,React,react,react native,Java">
+
+
+
+    <meta name="description" content="React Component 是個 function 所以當然也可以用 Recursion，如果不知道 Recursion(遞迴) 的朋友這邊簡單的介紹一下 Recursion (遞迴) 一個 function 呼叫自己，每個 recursive function 都需要有  base case: 一但此狀態達成，就不再呼叫遞迴函式 recursive case: 在此狀態下，持續呼叫遞迴函式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Recursive Component 是什麼？">
+<meta property="og:url" content="https://briancodeitup.blog/2022/05/04/Recursive-Component-%E6%98%AF%E4%BB%80%E9%BA%BC%EF%BC%9F/index.html">
+<meta property="og:site_name" content="Brian&#39;s Blog">
+<meta property="og:description" content="React Component 是個 function 所以當然也可以用 Recursion，如果不知道 Recursion(遞迴) 的朋友這邊簡單的介紹一下 Recursion (遞迴) 一個 function 呼叫自己，每個 recursive function 都需要有  base case: 一但此狀態達成，就不再呼叫遞迴函式 recursive case: 在此狀態下，持續呼叫遞迴函式">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/5FE58144-5262-4F46-9CFF-48D3A4E4CD2E/A5436146-9D40-41DD-90AF-935B229B2027_2/YX3umyKfdeYCzxxmJi6yfgQPzsgjmQDm2EyIdZMgWIAz/Image.png">
+<meta property="article:published_time" content="2022-05-04T10:47:39.000Z">
+<meta property="article:modified_time" content="2022-05-04T18:57:16.386Z">
+<meta property="article:author" content="Brian Chen">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/5FE58144-5262-4F46-9CFF-48D3A4E4CD2E/A5436146-9D40-41DD-90AF-935B229B2027_2/YX3umyKfdeYCzxxmJi6yfgQPzsgjmQDm2EyIdZMgWIAz/Image.png">
+
+
+
+
+
+<link rel="icon" href="/images/blog-icon.svg">
+
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Ovo|Source+Code+Pro">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightgallery/1.6.8/css/lightgallery.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/justifiedGallery/3.6.5/css/justifiedGallery.min.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+<script defer src="//use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+
+
+    
+    
+    
+
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head>
+<body>
+    
+<nav class="navbar is-transparent is-fixed-top navbar-main" role="navigation" aria-label="main navigation">
+    <div class="container">
+        <div class="navbar-brand">
+            <a class="navbar-item navbar-logo" href="/">
+                
+                    
+                    Brian
+                    
+                
+            </a>
+            <div class="navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="navbar-menu navbar-start">
+            
+            <a class="navbar-item "
+               href="/archives">文章列表</a>
+            
+            <a class="navbar-item "
+               href="/tags">標籤</a>
+            
+            <a class="navbar-item "
+               href="/about">關於我</a>
+            
+        </div>
+        
+        <div class="navbar-menu navbar-end">
+            
+            <a class="navbar-item search" title="搜尋" href="javascript:;">
+                <i class="fas fa-search"></i>
+            </a>
+            
+            
+            
+            <a class="navbar-item" title="GitHub" target="_blank" rel="noopener" href="https://github.com/BrianCodeItUp">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+               
+            
+        </div>
+    </div>
+</nav>
+
+    <section class="section">
+    <div class="container">
+    <article class="article content gallery" itemscope itemprop="blogPost">
+    <h1 class="article-title is-size-3 is-size-4-mobile" itemprop="name">
+        
+            Recursive Component 是什麼？
+        
+    </h1>
+    <div class="article-meta columns is-variable is-1 is-multiline is-mobile is-size-7-mobile">
+        <span class="column is-narrow">
+            
+                <span>5月 4 2022</span>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-entry is-size-6-mobile" itemprop="articleBody">
+    
+        <html><head></head><body><p>React Component 是個 function 所以當然也可以用 Recursion，如果不知道 Recursion(遞迴) 的朋友這邊簡單的介紹一下</p>
+<p>Recursion (遞迴) 一個 function 呼叫自己，每個 recursive function 都需要有</p>
+<ul>
+<li>base case: 一但此狀態達成，就不再呼叫遞迴函式</li>
+<li>recursive case: 在此狀態下，持續呼叫遞迴函式</li>
+</ul>
+<p>$n!$ (factorial function)：在數學裡的意思是將到 n 數值乘再一起, ex: $$4! = 4 \times 3 \times 2 \times 1$$ ，在程式裡面我們習慣將其稱作 $fact(n)$</p>
+<span id="more"></span>
+<p>$$fact(1) = 1$$</p>
+<p>$$fact(2) = 2 \times 1$$</p>
+<p>$$fact(3) = 3 \times  2 \times 1$$</p>
+<p>$$fact(4) = 4 \times 3 \times 2 \times 1$$</p>
+<p>$$fact(5) = 5 \times 4 \times 3 \times 2 \times 1$$</p>
+<p>所以將它換成</p>
+<p>$$fact(1) = 1$$</p>
+<p>$$fact(2) = 2 \times fact(1)$$</p>
+<p>$$fact(3) = 3 \times fact(2)$$</p>
+<p>$$fact(4) = 4 \times fact(3)$$</p>
+<p>$$fact(5) = 5 \times fact(4)$$</p>
+<p>所以</p>
+<p>$$fact(n) = n \times fact(n - 1)$$</p>
+<p>我們實做看看 fact function</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fact</span> (<span class="hljs-params">num</span>) </span>{</span><br><span class="line">	<span class="hljs-keyword">if</span> (num === <span class="hljs-number">1</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="hljs-keyword">return</span> num * fact(num - <span class="hljs-number">1</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>其他還有費波那契數列(Fibonacci Sequence)、考拉茲猜想(The Collaztz conjecture) 都會用到遞迴的概念</p>
+<h2 id="進入正題"><a href="#進入正題" class="headerlink" title="進入正題"></a>進入正題</h2><p>這種 Component 通常被用來 Render 樹狀的資料，比如說可以在別人的留言上留言，或者是巢狀的側邊導覽 Bar 等等都可以用 Recursive Component 來實作</p>
+<p>這邊是我們的資料，可以看到一個留言下有多個留言的樹狀資料結構</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CommentModel</span> </span>{</span><br><span class="line">  <span class="hljs-function"><span class="hljs-title">constructor</span>(<span class="hljs-params">username, content = <span class="hljs-string">""</span>, subComments = [], id = uuid()</span>)</span> {</span><br><span class="line">    <span class="hljs-built_in">this</span>.id = id;</span><br><span class="line">    <span class="hljs-built_in">this</span>.username = username;</span><br><span class="line">    <span class="hljs-built_in">this</span>.content = content;</span><br><span class="line">    <span class="hljs-built_in">this</span>.subComments = subComments;</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">const</span> comments = [</span><br><span class="line">  <span class="hljs-keyword">new</span> CommentModel(<span class="hljs-string">"Brian"</span>, <span class="hljs-string">"I think this is really cool!"</span>, [</span><br><span class="line">    <span class="hljs-keyword">new</span> CommentModel(<span class="hljs-string">"Emily"</span>, <span class="hljs-string">"Yea, I agree 😀"</span>, [</span><br><span class="line">      <span class="hljs-keyword">new</span> CommentModel(<span class="hljs-string">"Kevin"</span>, <span class="hljs-string">"What make you guys think that way ???"</span>)</span><br><span class="line">    ]),</span><br><span class="line">    <span class="hljs-keyword">new</span> CommentModel(<span class="hljs-string">"Miranda"</span>, <span class="hljs-string">"Well, at least we have some progress"</span>, [</span><br><span class="line">      <span class="hljs-keyword">new</span> CommentModel(<span class="hljs-string">"Haha"</span>, <span class="hljs-string">"No!!!!!!"</span>)</span><br><span class="line">    ])</span><br><span class="line">  ])</span><br><span class="line">];</span><br></pre></td></tr></tbody></table></figure>
+
+<p>這邊我們的 RecursiveComment 就是一個遞回函式，然後會停止遞迴的狀態就是都當沒有任何子留言的時候</p>
+<figure class="highlight javascript hljs"><table><tbody><tr><td class="code"><pre><span class="line"><span class="hljs-keyword">const</span> RecursiveComment = <span class="hljs-function">(<span class="hljs-params">{ id, username, content, subComments }</span>) =&gt;</span> {</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{id}</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment-title"</span>&gt;</span>{username}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment-content"</span>&gt;</span>{content}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"sub-comment"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        {subComments.map((comment) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">          <span class="hljs-tag">&lt;<span class="hljs-name">RecursiveComment</span> {<span class="hljs-attr">...comment</span>} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        ))}</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">};</span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Post</span>(<span class="hljs-params"></span>) </span>{</span><br><span class="line">  <span class="hljs-keyword">return</span> (</span><br><span class="line">    <span class="hljs-xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">"Post"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>This is the post about recursive component<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"post-content"</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">        So a recursvie component is a component render itself as a tree</span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment-section-title"</span>&gt;</span>Comments<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      <span class="hljs-tag">&lt;<span class="hljs-name">hr</span> /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      {comments.map((comment) =&gt; (</span></span><br><span class="line"><span class="hljs-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">RecursiveComment</span> {<span class="hljs-attr">...comment</span>} /&gt;</span></span></span><br><span class="line"><span class="hljs-xml">      ))}</span></span><br><span class="line"><span class="hljs-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<p>成果</p>
+<p><img src="https://res.craft.do/user/full/267d214d-cb69-5be2-33d2-48f3d5be02b7/doc/5FE58144-5262-4F46-9CFF-48D3A4E4CD2E/A5436146-9D40-41DD-90AF-935B229B2027_2/YX3umyKfdeYCzxxmJi6yfgQPzsgjmQDm2EyIdZMgWIAz/Image.png" alt="Image.png"></p>
+<h2 id="結語"><a href="#結語" class="headerlink" title="結語"></a>結語</h2><p>Recursive Component 是的 usecase 較少，且閱讀性較差，所以大部分的情況，只適用於需要動態樹狀資料結構才有可能需要 Recursive Component，但若是靜態畫面的話，其實使用一般元件搭配 Composition 或者 Compound Component 等元件設計模式，元件會更容易閱讀、維護</p>
+</body></html>
+    
+    </div>
+    
+    <div class="columns is-variable is-1 is-multiline is-mobile">
+    
+        <span class="column is-narrow"><a class="tag is-light article-tag" href="/tags/react/">#react</a></span>
+    
+    </div>
+    
+    
+    <div class="columns is-mobile is-multiline article-nav">
+        <span class="column is-12-mobile is-half-desktop is-hidden-mobile article-nav-prev">
+            
+        </span>
+        <span class="column is-12-mobile is-half-desktop  article-nav-next">
+            
+            <a href="/2022/05/04/%E5%BB%BA%E7%AB%8B-React-Web-%E5%92%8C-React-Native-%E7%9A%84-Monorepo/">建立 React Web 和 React Native 的 Monorepo</a>
+            
+        </span>
+    </div>
+    
+</article>
+
+
+
+
+    </div>
+</section>
+    <footer class="footer">
+    <div class="container">
+        <div class="columns content">
+            <div class="column is-narrow has-text-centered">
+                &copy; 2022 Brian Chen&nbsp;
+                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a
+                        target="_blank" rel="noopener" href="http://github.com/ppoffice/hexo-theme-minos">Minos</a>
+            </div>
+            <div class="column is-hidden-mobile"></div>
+
+            
+            <div class="column is-narrow">
+                <div class="columns is-mobile is-multiline is-centered">
+                
+                    
+                <a class="column is-narrow has-text-black" title="GitHub" target="_blank" rel="noopener" href="https://github.com/BrianCodeItUp">
+                    
+                    GitHub
+                    
+                </a>
+                
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</footer>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script>
+
+<!-- test if the browser is outdated -->
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="//cdnjs.cloudflare.com/ajax/libs/outdated-browser/1.1.5/outdatedbrowser.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // plugin function, place inside DOM ready function
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        })
+    });
+</script>
+
+<script>
+    window.FontAwesomeConfig = {
+        searchPseudoElements: true
+    }
+    moment.locale("zh-CN");
+</script>
+
+
+    
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script>
+    MathJax.Hub.Config({
+        "HTML-CSS": {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+</script>
+
+    
+
+
+
+<script src="/js/script.js"></script>
+
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-mask"></div>
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="站內搜尋" />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '頁面',
+                CATEGORIES: '分類',
+                TAGS: '標籤',
+                UNTITLED: '(無標題)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+    
+</body>
+</html>
